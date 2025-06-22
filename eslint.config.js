@@ -1,15 +1,16 @@
 import eslint from '@eslint/js';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
-import reactRefresh from 'eslint-plugin-react-refresh';
-import reactHooks from 'eslint-plugin-react-hooks';
-import prettier from 'eslint-plugin-prettier/recommended';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
+import router from '@tanstack/eslint-plugin-router';
 import importer from 'eslint-plugin-import';
+import jestDom from 'eslint-plugin-jest-dom';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import prettier from 'eslint-plugin-prettier/recommended';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import sonarjs from 'eslint-plugin-sonarjs';
 import tailwind from 'eslint-plugin-tailwindcss';
 import testingLibrary from 'eslint-plugin-testing-library';
-import jestDom from 'eslint-plugin-jest-dom';
-import sonarjs from 'eslint-plugin-sonarjs';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -17,15 +18,16 @@ export default tseslint.config(
     extends: [
       eslint.configs.recommended,
       tseslint.configs.recommended,
-      prettier,
-      jsxA11y.flatConfigs.recommended,
-      reactRefresh.configs.vite,
-      reactHooks.configs['recommended-latest'],
       importer.flatConfigs.recommended,
+      jestDom.configs['flat/recommended'],
+      jsxA11y.flatConfigs.recommended,
+      prettier,
+      reactHooks.configs['recommended-latest'],
+      reactRefresh.configs.vite,
+      router.configs['flat/recommended'],
+      sonarjs.configs.recommended,
       tailwind.configs['flat/recommended'],
       testingLibrary.configs['flat/react'],
-      jestDom.configs['flat/recommended'],
-      sonarjs.configs.recommended,
     ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -42,15 +44,7 @@ export default tseslint.config(
       'import/order': [
         'error',
         {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            'parent',
-            'sibling',
-            'index',
-            'object',
-          ],
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
           'newlines-between': 'always',
           alphabetize: { order: 'asc', caseInsensitive: true },
         },
