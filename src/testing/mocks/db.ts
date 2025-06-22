@@ -53,7 +53,7 @@ export const seedDb = async () => {
     roles: JSON.stringify(['admin']),
   });
 
-  Array.from({ length: 15 }).forEach(() => {
+  Array.from({ length: 5 }).forEach(() => {
     db.user.create({
       id: crypto.randomUUID(),
       name: faker.person.fullName(),
