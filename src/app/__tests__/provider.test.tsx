@@ -1,11 +1,11 @@
-import { render, screen } from "@/testing/test-utils";
+import { render, screen } from '@/testing/test-utils';
 
-import { AppProvider } from "../provider";
+import { AppProvider } from '../provider';
 
-describe("AppProvider", () => {
-  it("should render properly", async () => {
+describe('AppProvider', () => {
+  it('should render properly', async () => {
     render(<AppProvider>Hello world!</AppProvider>);
 
-    expect(screen.getByText("Hello world!")).toBeInTheDocument();
+    expect(screen.getByText('Hello world!')).toBeInTheDocument();
   });
 });

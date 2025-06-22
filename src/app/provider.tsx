@@ -1,4 +1,4 @@
-import { type FC, type ReactNode, Suspense } from "react";
+import { type FC, type ReactNode, Suspense } from 'react';
 
 interface AppProviderProps {
   children: ReactNode;
