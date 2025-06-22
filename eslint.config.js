@@ -1,4 +1,5 @@
 import eslint from '@eslint/js';
+import query from '@tanstack/eslint-plugin-query';
 import router from '@tanstack/eslint-plugin-router';
 import importer from 'eslint-plugin-import';
 import jestDom from 'eslint-plugin-jest-dom';
@@ -22,6 +23,7 @@ export default tseslint.config(
       jestDom.configs['flat/recommended'],
       jsxA11y.flatConfigs.recommended,
       prettier,
+      query.configs['flat/recommended'],
       reactHooks.configs['recommended-latest'],
       reactRefresh.configs.vite,
       router.configs['flat/recommended'],
