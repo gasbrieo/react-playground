@@ -11,8 +11,7 @@
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui --coverage.enabled=true",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "gen:api": "npx swagger-typescript-api generate --name index.ts --output src/api/gen --modular --path http://localhost:5000/api/specification.json"
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.81.2",
@@ -55,6 +54,7 @@
     "jsdom": "^26.1.0",
     "msw": "^2.10.2",
     "openapi-typescript-codegen": "^0.29.0",
+    "rollup-plugin-visualizer": "^6.0.3",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5",

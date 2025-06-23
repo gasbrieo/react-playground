@@ -2,6 +2,7 @@
 
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react-swc';
+import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 
@@ -13,6 +14,9 @@ export default defineConfig({
     }),
     react(),
     viteTsconfigPaths(),
+    visualizer({
+      filename: 'dist/stats.html',
+    }),
   ],
   test: {
     globals: true,
