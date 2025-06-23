@@ -45,8 +45,11 @@ describe('ListUsersPage', () => {
 
     renderApp(<ListUsersPage />);
 
-    expect(await screen.findByText(/user@test.com/)).toBeInTheDocument();
-    expect(screen.getByText(/admin/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
+    });
+
+    expect(screen.getByText('user@test.com')).toBeInTheDocument();
   });
 
   it('shows error message on failure', async () => {

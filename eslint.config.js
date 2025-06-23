@@ -52,6 +52,7 @@ export default tseslint.config(
         { type: 'routes', pattern: 'src/routes/**' },
         { type: 'testing', pattern: 'src/testing/**' },
         { type: 'types', pattern: 'src/types/**' },
+        { type: 'utils', pattern: 'src/utils/**' },
       ],
     },
     rules: {
@@ -75,11 +76,11 @@ export default tseslint.config(
             },
             {
               from: 'components',
-              allow: ['components'],
+              allow: ['components', 'features', 'utils'],
             },
             {
               from: 'features',
-              allow: ['features', 'lib', 'testing', 'types'],
+              allow: ['components', 'features', 'lib', 'testing', 'types'],
             },
             {
               from: 'lib',
@@ -91,11 +92,15 @@ export default tseslint.config(
             },
             {
               from: 'testing',
-              allow: ['testing', 'lib', 'types'],
+              allow: ['lib', 'testing', 'types'],
             },
             {
               from: 'types',
               allow: ['types'],
+            },
+            {
+              from: 'utils',
+              allow: ['utils'],
             },
           ],
         },

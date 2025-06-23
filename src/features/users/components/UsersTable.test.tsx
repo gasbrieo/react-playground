@@ -19,7 +19,7 @@ describe('UsersTable', () => {
 
     render(<UsersTable users={users} />);
 
-    expect(screen.getByText('john@example.com - Roles: admin, editor')).toBeInTheDocument();
-    expect(screen.getByText('jane@example.com - Roles: user')).toBeInTheDocument();
+    expect(screen.getByText('john@example.com')).toBeInTheDocument();
+    expect(screen.getByText('jane@example.com')).toBeInTheDocument();
   });
 });

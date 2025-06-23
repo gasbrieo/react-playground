@@ -6,12 +6,19 @@ interface UsersTableProps {
 
 export const UsersTable: React.FC<UsersTableProps> = ({ users }) => {
   return (
-    <ul>
-      {users.map((user) => (
-        <li key={user.userId}>
-          {user.email} - Roles: {user.roles.join(', ')}
-        </li>
-      ))}
-    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        {users.map((user) => (
+          <tr key={user.userId}>
+            <td>{user.email}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
