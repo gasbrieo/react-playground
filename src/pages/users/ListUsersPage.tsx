@@ -1,6 +1,15 @@
 import type { ColumnDef } from '@tanstack/react-table';
+import { MoreHorizontal } from 'lucide-react';
 
 import { DataTable } from '@/components/ui/DataTable';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/DropdownMenu';
 import { useFetchUsers } from '@/hooks/useFetchUsers';
 import type { User } from '@/types/users';
 
@@ -40,6 +49,30 @@ export const ListUsersPage = () => {
     {
       accessorKey: 'roles',
       header: 'Roles',
+    },
+    {
+      id: 'actions',
+      cell: ({ row }) => {
+        const user = row.original;
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button>
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id)}>Copy user ID</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>View user</DropdownMenuItem>
+              <DropdownMenuItem>Edit user</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
     },
   ];
 
