@@ -9,7 +9,6 @@ import prettier from 'eslint-plugin-prettier/recommended';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import sonarjs from 'eslint-plugin-sonarjs';
-import tailwind from 'eslint-plugin-tailwindcss';
 import testingLibrary from 'eslint-plugin-testing-library';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -29,7 +28,6 @@ export default tseslint.config(
       reactRefresh.configs.vite,
       router.configs['flat/recommended'],
       sonarjs.configs.recommended,
-      tailwind.configs['flat/recommended'],
       testingLibrary.configs['flat/react'],
     ],
     files: ['**/*.{ts,tsx}'],

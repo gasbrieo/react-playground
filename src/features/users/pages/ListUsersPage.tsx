@@ -8,7 +8,7 @@ export const ListUsersPage: FC = () => {
 
   return (
     <div>
-      <h1>Users List</h1>
+      <h1 className="text-3xl font-bold underline">Users List</h1>
       {listUsersQuery.isLoading && <p>Loading...</p>}
       {listUsersQuery.isError && <p>Error loading users.</p>}
       {listUsersQuery.data && <UsersTable users={listUsersQuery.data.items} />}

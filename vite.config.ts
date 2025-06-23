@@ -1,5 +1,6 @@
 /// <reference types="vitest/config" />
 
+import tailwindcss from '@tailwindcss/vite';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react-swc';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -13,6 +14,7 @@ export default defineConfig({
       autoCodeSplitting: true,
     }),
     react(),
+    tailwindcss(),
     viteTsconfigPaths(),
     visualizer({
       filename: 'dist/stats.html',
