@@ -24,8 +24,12 @@ export const usersHandlers = [
       })
       .map((user) => {
         return {
-          userId: user.id,
+          id: user.id,
+          name: user.name,
           email: user.email,
+          createdAt: user.createdAt,
+          accountBalance: user.accountBalance,
+          status: user.status,
           roles: user.roles ? JSON.parse(user.roles) : [],
         } as User;
       });

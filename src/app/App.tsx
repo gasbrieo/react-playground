@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
-import { type FC, Suspense, useState } from 'react';
+import { Suspense, useState } from 'react';
 
 import { Toaster } from '@/components/ui/Toaster';
 import { queryConfig } from '@/lib/reactQuery';
@@ -17,7 +17,7 @@ declare module '@tanstack/react-router' {
   }
 }
 
-export const App: FC = () => {
+export const App = () => {
   const [queryClient] = useState(
     () =>
       new QueryClient({

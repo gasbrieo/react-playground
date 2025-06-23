@@ -57,6 +57,7 @@ export default tseslint.config(
       ],
     },
     rules: {
+      '@typescript-eslint/no-empty-object-type': 'off',
       'import/order': [
         'error',
         {
@@ -77,7 +78,7 @@ export default tseslint.config(
             },
             {
               from: 'components',
-              allow: ['components'],
+              allow: ['components', 'utils'],
             },
             {
               from: 'hooks',

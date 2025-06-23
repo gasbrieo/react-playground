@@ -1,12 +1,16 @@
 import { faker } from '@faker-js/faker';
 import { factory, primaryKey } from '@mswjs/data';
 
+import { UserRole, UserStatus } from '@/types/users';
+
 const models = {
   user: {
     id: primaryKey(String),
     name: String,
     email: String,
-    password: String,
+    createdAt: String,
+    accountBalance: Number,
+    status: String,
     roles: String,
   },
 };
@@ -16,6 +20,7 @@ export const db = factory(models);
 export type Model = keyof typeof models;
 
 export const loadDb = async () => {
+  window.localStorage.clear();
   return Object.assign(JSON.parse(window.localStorage.getItem('msw-db') || '{}'));
 };
 
@@ -49,8 +54,10 @@ export const seedDb = async () => {
     id: crypto.randomUUID(),
     name: 'admin',
     email: 'admin@localhost.com',
-    password: faker.internet.password(),
-    roles: JSON.stringify(['admin']),
+    createdAt: faker.date.past({ years: 2 }).toISOString(),
+    accountBalance: parseFloat(faker.finance.amount({ min: 0, max: 10000, dec: 2 })),
+    status: UserStatus.ACTIVE,
+    roles: JSON.stringify([UserRole.ADMINISTRATOR]),
   });
 
   Array.from({ length: 5 }).forEach(() => {
@@ -58,8 +65,15 @@ export const seedDb = async () => {
       id: crypto.randomUUID(),
       name: faker.person.fullName(),
       email: faker.internet.email(),
-      password: faker.internet.password(),
-      roles: JSON.stringify(['user']),
+      createdAt: faker.date.past({ years: 2 }).toISOString(),
+      accountBalance: parseFloat(faker.finance.amount({ min: 0, max: 10000, dec: 2 })),
+      status: faker.helpers.arrayElement(Object.values(UserStatus)),
+      roles: JSON.stringify(
+        faker.helpers.arrayElements([UserRole.EDITOR, UserRole.VIEWER], {
+          min: 1,
+          max: 3,
+        }),
+      ),
     });
   });
 

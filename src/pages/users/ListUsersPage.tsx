@@ -9,8 +9,37 @@ export const ListUsersPage = () => {
 
   const columns: ColumnDef<User>[] = [
     {
+      accessorKey: 'name',
+      header: 'Name',
+    },
+    {
       accessorKey: 'email',
       header: 'Email',
+    },
+    {
+      accessorKey: 'createdAt',
+      header: 'Created At',
+    },
+    {
+      accessorKey: 'accountBalance',
+      header: 'Account Balance',
+      cell: ({ row }) => {
+        const amount = parseFloat(row.getValue('accountBalance'));
+        const formatted = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }).format(amount);
+
+        return formatted;
+      },
+    },
+    {
+      accessorKey: 'status',
+      header: 'Status',
+    },
+    {
+      accessorKey: 'roles',
+      header: 'Roles',
     },
   ];
 
@@ -22,10 +51,5 @@ export const ListUsersPage = () => {
     return <p>Error loading users.</p>;
   }
 
-  return (
-    <div>
-      <h1>Users List</h1>
-      {data && <DataTable columns={columns} data={data.items} />}
-    </div>
-  );
+  return <div className="container mx-auto py-10">{data && <DataTable columns={columns} data={data.items} />}</div>;
 };
