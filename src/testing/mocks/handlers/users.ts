@@ -1,6 +1,7 @@
 import { HttpResponse, http } from 'msw';
 
-import type { PagedList, UserResponse } from '@/types/api';
+import type { PagedList } from '@/types/api';
+import type { User } from '@/types/users';
 
 import { db } from '../db';
 import { networkDelay } from '../utils';
@@ -26,10 +27,10 @@ export const usersHandlers = [
           userId: user.id,
           email: user.email,
           roles: user.roles ? JSON.parse(user.roles) : [],
-        } as UserResponse;
+        } as User;
       });
 
-    const response: PagedList<UserResponse> = {
+    const response: PagedList<User> = {
       items: items,
       pageNumber: page,
       totalPages: totalPages,
