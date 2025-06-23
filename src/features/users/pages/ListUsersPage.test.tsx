@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 
 import { server } from '@/testing/mocks/server';
-import { renderApp, screen } from '@/testing/testUtils';
+import { renderApp, screen, waitFor } from '@/testing/testUtils';
 
 import { ListUsersPage } from './ListUsersPage';
 
@@ -17,6 +17,10 @@ describe('ListUsersPage', () => {
     renderApp(<ListUsersPage />);
 
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
+    });
   });
 
   it('renders user list on success', async () => {
