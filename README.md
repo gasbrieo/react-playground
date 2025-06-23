@@ -71,7 +71,7 @@ src/
 ### Test Commands
 
 ```bash
-npm test             # run all tests
+npm run test             # run all tests
 npm run test:coverage    # run tests with coverage
 npm run test:ui          # run UI test dashboard (with coverage)
 ```
