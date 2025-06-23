@@ -2,10 +2,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { api } from '@/lib/apiClient';
 import { renderHook } from '@/testing/testUtils';
+import type { ListUsersParams } from '@/types/api';
 
 import { useListUsers } from './useListUsers';
-
-import type { ListUsersParams } from '@/types/api';
 
 vi.mock('@/lib/apiClient', () => ({
   api: {

@@ -1,11 +1,9 @@
 import { HttpResponse, http } from 'msw';
 
-import type { PagedList } from '@/types/api';
+import type { PagedList, UserResponse } from '@/types/api';
 
 import { db } from '../db';
 import { networkDelay } from '../utils';
-
-import type { UserResponse } from '@/types/api';
 
 export const usersHandlers = [
   http.get('/api/v1/users', async ({ request }) => {
