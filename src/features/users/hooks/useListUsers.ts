@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { api } from '@/lib/api-client';
-import type { PagedList } from '@/types/paged-list';
-import type { ListUsersParams, UserResponse } from '@/types/users';
+import { api } from '@/lib/apiClient';
+import type { PagedList } from '@/types/api';
+
+import type { ListUsersParams, UserResponse } from '@/types/api';
 
 const listUsers = async (params: ListUsersParams): Promise<PagedList<UserResponse>> => {
   const response = await api.get<PagedList<UserResponse>>('/api/v1/users', {

@@ -1,6 +1,6 @@
-import { render, screen } from '@/testing/test-utils';
+import { render, screen } from '@/testing/testUtils';
 
-import { UsersTable } from './users-table';
+import { UsersTable } from './UsersTable';
 
 describe('UsersTable', () => {
   it('renders a list of users with roles', () => {

@@ -1,9 +1,9 @@
 import { http, HttpResponse } from 'msw';
 
 import { server } from '@/testing/mocks/server';
-import { renderApp, screen } from '@/testing/test-utils';
+import { renderApp, screen } from '@/testing/testUtils';
 
-import { ListUsersPage } from './list-users';
+import { ListUsersPage } from './ListUsersPage';
 
 describe('ListUsersPage', () => {
   it('shows loading indicator', async () => {

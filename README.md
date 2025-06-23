@@ -1,54 +1,124 @@
-# React + TypeScript + Vite
+# React Playground
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A structured React + Vite application for experimenting with modern frontend libraries and production-grade patterns.
 
-Currently, two official plugins are available:
+## 🧱 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React** + **TypeScript**
+- **Vite** – fast bundler and dev server
+- **TanStack Router** – file-based routing via `src/routes`
+- **TanStack Form** – composable schema-based forms
+- **TanStack Query** – async data fetching and caching
+- **TanStack Table** – headless table logic
+- **Zustand** – minimal state management
+- **Zod** – runtime schema validation
+- **shadcn/ui** – Radix-based UI components + TailwindCSS
+- **Axios** – HTTP client with interceptors
+- **MSW** – API mocking for local dev and tests
+- **Vitest** – test runner (unit and UI)
+- **Testing Library** – testing components behavior
+- **ESLint + Prettier** – strict code quality enforcement
 
-## Expanding the ESLint configuration
+## 📁 Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+src/
+│
+├── components/
+│   ├── ui/           # Reusable UI elements (e.g. Button, Table)
+│   ├── layout/       # Layout wrappers (e.g. Sidebar, Header)
+│   ├── errors/       # Error boundaries, fallback UIs
+│   └── seo/          # SEO configuration components
+│
+├── features/
+│   ├── auth/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   └── pages/
+│   └── users/
+│       ├── components/
+│       ├── hooks/
+│       └── pages/
+│
+├── hooks/            # App-level generic hooks (e.g. useIsMobile)
+├── lib/              # Shared libs (e.g. react-query setup, cn())
+├── routes/           # TanStack file-based router entries
+├── testing/          # MSW handlers, test wrappers, mocks
+├── types/            # Global types/interfaces
+└── utils/            # Generic utility functions
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+> Pages live inside each feature (`features/<feature>/pages`). There is no global `pages/` directory.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📐 Naming Conventions
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+> Currently not enforced by ESLint
+
+| Context                 | Convention | Example                       |
+| ----------------------- | ---------- | ----------------------------- |
+| React components (.tsx) | PascalCase | `UserCard.tsx`                |
+| Hooks / Utils (.ts)     | camelCase  | `useSession.ts`, `slugify.ts` |
+| Assets / Others         | kebab-case | `main-menu.scss`, `logo.svg`  |
+
+## 🧪 Testing
+
+- **Vitest** for test execution
+- **@testing-library/react** for user interaction tests
+- **MSW** for intercepting network requests in tests and local dev
+- Co-located test files (e.g. `Component.test.tsx`)
+- Testing helpers live under `src/testing/`
+
+### Test Commands
+
+```bash
+npm test             # run all tests
+npm run test:coverage    # run tests with coverage
+npm run test:ui          # run UI test dashboard (with coverage)
 ```
+
+## 🔧 ESLint Setup
+
+Using **Flat Config** (`eslint.config.js`) with strict community-aligned rules.
+
+### Installed ESLint dependencies:
+
+- `eslint`
+- `eslint-config-prettier`
+- `eslint-import-resolver-typescript`
+- `eslint-plugin-import`
+- `eslint-plugin-jest-dom`
+- `eslint-plugin-jsx-a11y`
+- `eslint-plugin-prettier`
+- `eslint-plugin-react-hooks`
+- `eslint-plugin-react-refresh`
+- `eslint-plugin-sonarjs`
+- `eslint-plugin-tailwindcss`
+- `eslint-plugin-testing-library`
+
+### Lint Scripts
+
+```bash
+npm run lint       # check all files
+npm run lint:fix   # auto-fix issues
+```
+
+## 📚 References
+
+Inspired by:
+
+- [Bulletproof React](https://github.com/alan2207/bulletproof-react)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [TanStack libraries](https://tanstack.com/)
+
+---
+
+## 🚀 Getting Started
+
+```bash
+npm install
+npm run dev
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

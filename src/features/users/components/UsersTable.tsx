@@ -1,4 +1,4 @@
-import type { UserResponse } from '@/types/users';
+import type { UserResponse } from '@/types/api';
 
 interface UsersTableProps {
   users: UserResponse[];

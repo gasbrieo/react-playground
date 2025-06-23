@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 
-import { useListUsers } from '../api/use-list-users';
-import { UsersTable } from '../components/users-table';
+import { UsersTable } from '../components/UsersTable';
+import { useListUsers } from '../hooks/useListUsers';
 
 export const ListUsersPage: FC = () => {
   const listUsersQuery = useListUsers({ page: 1, pageSize: 10 });
