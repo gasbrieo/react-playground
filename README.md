@@ -85,9 +85,10 @@ Using **Flat Config** (`eslint.config.js`) with strict community-aligned rules.
 - `eslint`
 - `eslint-config-prettier`
 - `eslint-import-resolver-typescript`
-- `eslint-plugin-import`
+- `eslint-plugin-boundaries`
 - `eslint-plugin-jest-dom`
 - `eslint-plugin-jsx-a11y`
+- `eslint-plugin-import`
 - `eslint-plugin-prettier`
 - `eslint-plugin-react-hooks`
 - `eslint-plugin-react-refresh`

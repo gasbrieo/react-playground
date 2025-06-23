@@ -50,4 +50,4 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
-            -Dsonar.exclusions=**/*.test.tsx,**/*.test.ts
+            -Dsonar.exclusions=**/*.test.tsx,**/*.test.ts,public/mockServiceWorker.js

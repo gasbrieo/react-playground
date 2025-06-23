@@ -1,9 +1,10 @@
 import eslint from '@eslint/js';
 import query from '@tanstack/eslint-plugin-query';
 import router from '@tanstack/eslint-plugin-router';
-import importer from 'eslint-plugin-import';
+import boundaries from 'eslint-plugin-boundaries';
 import jestDom from 'eslint-plugin-jest-dom';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
+import importer from 'eslint-plugin-import';
 import prettier from 'eslint-plugin-prettier/recommended';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
@@ -14,14 +15,14 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'coverage'] },
   {
     extends: [
       eslint.configs.recommended,
       tseslint.configs.recommended,
-      importer.flatConfigs.recommended,
       jestDom.configs['flat/recommended'],
       jsxA11y.flatConfigs.recommended,
+      importer.flatConfigs.recommended,
       prettier,
       query.configs['flat/recommended'],
       reactHooks.configs['recommended-latest'],
@@ -36,11 +37,23 @@ export default tseslint.config(
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    plugins: {
+      boundaries,
+    },
     settings: {
       'import/resolver': {
         typescript: true,
         node: true,
       },
+      'boundaries/ignore': ['src/main.tsx', 'src/vite-env.d.ts', 'vite.config.ts'],
+      'boundaries/elements': [
+        { type: 'app', pattern: 'src/app/**' },
+        { type: 'features', pattern: 'src/features/**' },
+        { type: 'lib', pattern: 'src/lib/**' },
+        { type: 'routes', pattern: 'src/routes/**' },
+        { type: 'testing', pattern: 'src/testing/**' },
+        { type: 'types', pattern: 'src/types/**' },
+      ],
     },
     rules: {
       'import/order': [
@@ -51,20 +64,51 @@ export default tseslint.config(
           alphabetize: { order: 'asc', caseInsensitive: true },
         },
       ],
-      'import/no-restricted-paths': [
+      'boundaries/no-unknown-files': 'error',
+      'boundaries/element-types': [
         'error',
         {
-          zones: [
-            // eg. src/features/auth should not import from src/features/users, etc.
+          default: 'disallow',
+          rules: [
             {
-              target: './src/features/users',
-              from: './src/features',
-              except: ['./users'],
+              from: 'app',
+              allow: ['app', 'lib', 'testing'],
             },
-            // e.g src/features and src/app can import from these shared modules but not the other way around
             {
-              target: ['./src/components', './src/hooks', './src/lib', './src/types', './src/utils'],
-              from: ['./src/features'],
+              from: 'features',
+              allow: ['features', 'lib', 'testing', 'types'],
+            },
+            {
+              from: 'lib',
+              allow: ['lib'],
+            },
+            {
+              from: 'routes',
+              allow: ['routes', 'features'],
+            },
+            {
+              from: 'testing',
+              allow: ['testing', 'lib', 'types'],
+            },
+            {
+              from: 'types',
+              allow: ['types'],
+            },
+          ],
+        },
+      ],
+      'boundaries/entry-point': [
+        2,
+        {
+          default: 'disallow',
+          rules: [
+            {
+              target: ['features'],
+              allow: '**/index.{ts,tsx}',
+            },
+            {
+              target: ['lib', 'testing', 'types'],
+              allow: '**/*.{ts,tsx}',
             },
           ],
         },
