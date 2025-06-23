@@ -3,6 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { type FC, Suspense, useState } from 'react';
 
+import { Toaster } from '@/components/ui/Toaster';
 import { queryConfig } from '@/lib/reactQuery';
 import { routeTree } from '@/routeTree.gen';
 
@@ -28,6 +29,7 @@ export const App: FC = () => {
     <Suspense>
       <QueryClientProvider client={queryClient}>
         {import.meta.env.DEV && <ReactQueryDevtools />}
+        <Toaster position="top-right" theme="light" richColors closeButton />
         <RouterProvider router={router} />
       </QueryClientProvider>
     </Suspense>

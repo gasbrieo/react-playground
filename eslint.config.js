@@ -46,6 +46,7 @@ export default tseslint.config(
       'boundaries/ignore': ['src/main.tsx', 'src/vite-env.d.ts', 'vite.config.ts'],
       'boundaries/elements': [
         { type: 'app', pattern: 'src/app/**' },
+        { type: 'components', pattern: 'src/components/**' },
         { type: 'features', pattern: 'src/features/**' },
         { type: 'lib', pattern: 'src/lib/**' },
         { type: 'routes', pattern: 'src/routes/**' },
@@ -70,7 +71,11 @@ export default tseslint.config(
           rules: [
             {
               from: 'app',
-              allow: ['app', 'lib', 'testing'],
+              allow: ['app', 'components', 'lib', 'testing'],
+            },
+            {
+              from: 'components',
+              allow: ['components'],
             },
             {
               from: 'features',
@@ -101,7 +106,7 @@ export default tseslint.config(
           default: 'disallow',
           rules: [
             {
-              target: ['features'],
+              target: ['components', 'features'],
               allow: '**/index.{ts,tsx}',
             },
             {
