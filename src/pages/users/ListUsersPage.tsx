@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/DropdownMenu';
 import { useFetchUsers } from '@/hooks/useFetchUsers';
 import type { User } from '@/types/users';
+import { Button } from '@/components/ui/Button';
 
 export const ListUsersPage = () => {
   const { data, isLoading, isError } = useFetchUsers(1, 10);
@@ -58,10 +59,10 @@ export const ListUsersPage = () => {
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button>
+              <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4" />
-              </button>
+              </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
