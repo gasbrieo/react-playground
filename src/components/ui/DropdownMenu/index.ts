@@ -21,3 +21,6 @@ export type { DropdownMenuLabelProps } from './DropdownMenuLabel';
 
 export { DropdownMenuSeparator } from './DropdownMenuSeparator';
 export type { DropdownMenuSeparatorProps } from './DropdownMenuSeparator';
+
+export { DropdownMenuCheckboxItem } from './DropdownMenuCheckboxItem';
+export type { DropdownMenuCheckboxItemProps } from './DropdownMenuCheckboxItem';
