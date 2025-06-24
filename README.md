@@ -30,15 +30,10 @@ src/
 │   ├── errors/       # Error boundaries, fallback UIs
 │   └── seo/          # SEO configuration components
 │
-├── features/
+├── pages/
 │   ├── auth/
-│   │   ├── components/
-│   │   ├── hooks/
-│   │   └── pages/
-│   └── users/
-│       ├── components/
-│       ├── hooks/
-│       └── pages/
+│   │   ├── login/
+│   │   ├── register/
 │
 ├── hooks/            # App-level generic hooks (e.g. useIsMobile)
 ├── lib/              # Shared libs (e.g. react-query setup, cn())
@@ -47,8 +42,6 @@ src/
 ├── types/            # Global types/interfaces
 └── utils/            # Generic utility functions
 ```
-
-> Pages live inside each feature (`features/<feature>/pages`). There is no global `pages/` directory.
 
 ## 📐 Naming Conventions
 

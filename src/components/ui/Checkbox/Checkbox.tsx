@@ -1,6 +1,8 @@
-import { cn } from '@/utils/cn';
 import { Indicator, Root } from '@radix-ui/react-checkbox';
 import { CheckIcon } from 'lucide-react';
+
+import { cn } from '@/utils/cn';
+
 import type { CheckboxProps } from './Checkbox.types';
 
 export const Checkbox = ({ className, ...props }: CheckboxProps) => {

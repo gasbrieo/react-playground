@@ -1,7 +1,9 @@
-import { cn } from '@/utils/cn';
 import { CheckboxItem, ItemIndicator } from '@radix-ui/react-dropdown-menu';
-import type { DropdownMenuCheckboxItemProps } from './DropdownMenuCheckboxItem.types';
 import { CheckIcon } from 'lucide-react';
+
+import { cn } from '@/utils/cn';
+
+import type { DropdownMenuCheckboxItemProps } from './DropdownMenuCheckboxItem.types';
 
 export const DropdownMenuCheckboxItem = ({ className, children, checked, ...props }: DropdownMenuCheckboxItemProps) => {
   return (

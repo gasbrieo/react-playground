@@ -1,7 +1,8 @@
-import { cn } from '@/utils/cn';
-import type { ButtonProps } from './Button.types';
-
 import { Slot } from '@radix-ui/react-slot';
+
+import { cn } from '@/utils/cn';
+
+import type { ButtonProps } from './Button.types';
 import { buttonVariants } from './Button.variants';
 
 export const Button = ({ className, variant, size, asChild = false, ...props }: ButtonProps) => {

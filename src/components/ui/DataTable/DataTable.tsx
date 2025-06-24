@@ -9,14 +9,14 @@ import {
   type SortingState,
   type VisibilityState,
 } from '@tanstack/react-table';
+import { useState } from 'react';
 
 import { Button } from '../Button';
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '../DropdownMenu';
 import { Input } from '../Input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../Table';
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '../DropdownMenu';
 
 import type { DataTableProps } from './DataTable.types';
-import { useState } from 'react';
 
 export const DataTable = <TData, TValue>({ data, columns }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);

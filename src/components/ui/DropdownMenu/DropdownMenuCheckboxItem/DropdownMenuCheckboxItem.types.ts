@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'react';
 import { CheckboxItem } from '@radix-ui/react-dropdown-menu';
+import type { ComponentProps } from 'react';
 
 export interface DropdownMenuCheckboxItemProps extends ComponentProps<typeof CheckboxItem> {}

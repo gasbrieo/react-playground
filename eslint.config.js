@@ -90,7 +90,7 @@ export default tseslint.config(
             },
             {
               from: 'pages',
-              allow: ['components', 'pages', 'hooks', 'testing', 'types'],
+              allow: ['components', 'lib', 'pages', 'hooks', 'testing', 'types'],
             },
             {
               from: 'routes',
