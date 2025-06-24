@@ -30,7 +30,7 @@ src/
 │   ├── errors/       # Error boundaries, fallback UIs
 │   └── seo/          # SEO configuration components
 │
-├── pages/
+├── features/
 │   ├── auth/
 │   │   ├── login/
 │   │   ├── register/

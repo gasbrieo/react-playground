@@ -8,88 +8,106 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as UsersRouteImport } from './routes/users'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as DatatableBasicRouteImport } from './routes/datatable/basic'
+import { Route as rootRouteImport } from './routes/__root';
+import { Route as PublicRouteImport } from './routes/_public';
+import { Route as PrivateRouteImport } from './routes/_private';
+import { Route as PrivateIndexRouteImport } from './routes/_private/index';
+import { Route as PrivateTablesPlansRouteImport } from './routes/_private/plans';
 
-const UsersRoute = UsersRouteImport.update({
-  id: '/users',
-  path: '/users',
+const PublicRoute = PublicRouteImport.update({
+  id: '/_public',
   getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
+} as any);
+const PrivateRoute = PrivateRouteImport.update({
+  id: '/_private',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const PrivateIndexRoute = PrivateIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DatatableBasicRoute = DatatableBasicRouteImport.update({
-  id: '/datatable/basic',
-  path: '/datatable/basic',
-  getParentRoute: () => rootRouteImport,
-} as any)
+  getParentRoute: () => PrivateRoute,
+} as any);
+const PrivateTablesPlansRoute = PrivateTablesPlansRouteImport.update({
+  id: '/tables/plans',
+  path: '/tables/plans',
+  getParentRoute: () => PrivateRoute,
+} as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/users': typeof UsersRoute
-  '/datatable/basic': typeof DatatableBasicRoute
+  '/': typeof PrivateIndexRoute;
+  '/tables/plans': typeof PrivateTablesPlansRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/users': typeof UsersRoute
-  '/datatable/basic': typeof DatatableBasicRoute
+  '/': typeof PrivateIndexRoute;
+  '/tables/plans': typeof PrivateTablesPlansRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/users': typeof UsersRoute
-  '/datatable/basic': typeof DatatableBasicRoute
+  __root__: typeof rootRouteImport;
+  '/_private': typeof PrivateRouteWithChildren;
+  '/_public': typeof PublicRoute;
+  '/_private/': typeof PrivateIndexRoute;
+  '/_private/tables/plans': typeof PrivateTablesPlansRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/users' | '/datatable/basic'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/users' | '/datatable/basic'
-  id: '__root__' | '/' | '/users' | '/datatable/basic'
-  fileRoutesById: FileRoutesById
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths: '/' | '/tables/plans';
+  fileRoutesByTo: FileRoutesByTo;
+  to: '/' | '/tables/plans';
+  id: '__root__' | '/_private' | '/_public' | '/_private/' | '/_private/tables/plans';
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  UsersRoute: typeof UsersRoute
-  DatatableBasicRoute: typeof DatatableBasicRoute
+  PrivateRoute: typeof PrivateRouteWithChildren;
+  PublicRoute: typeof PublicRoute;
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/users': {
-      id: '/users'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof UsersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/datatable/basic': {
-      id: '/datatable/basic'
-      path: '/datatable/basic'
-      fullPath: '/datatable/basic'
-      preLoaderRoute: typeof DatatableBasicRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+    '/_public': {
+      id: '/_public';
+      path: '';
+      fullPath: '';
+      preLoaderRoute: typeof PublicRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/_private': {
+      id: '/_private';
+      path: '';
+      fullPath: '';
+      preLoaderRoute: typeof PrivateRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/_private/': {
+      id: '/_private/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof PrivateIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/tables/plans': {
+      id: '/_private/tables/plans';
+      path: '/tables/plans';
+      fullPath: '/tables/plans';
+      preLoaderRoute: typeof PrivateTablesPlansRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  UsersRoute: UsersRoute,
-  DatatableBasicRoute: DatatableBasicRoute,
+interface PrivateRouteChildren {
+  PrivateIndexRoute: typeof PrivateIndexRoute;
+  PrivateTablesPlansRoute: typeof PrivateTablesPlansRoute;
 }
-export const routeTree = rootRouteImport
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+
+const PrivateRouteChildren: PrivateRouteChildren = {
+  PrivateIndexRoute: PrivateIndexRoute,
+  PrivateTablesPlansRoute: PrivateTablesPlansRoute,
+};
+
+const PrivateRouteWithChildren = PrivateRoute._addFileChildren(PrivateRouteChildren);
+
+const rootRouteChildren: RootRouteChildren = {
+  PrivateRoute: PrivateRouteWithChildren,
+  PublicRoute: PublicRoute,
+};
+export const routeTree = rootRouteImport._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>();

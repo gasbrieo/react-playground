@@ -1,1 +1,3 @@
-export const handlers = [];
+import { plansHandlers } from './plans';
+
+export const handlers = [...plansHandlers];

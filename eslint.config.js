@@ -47,9 +47,9 @@ export default tseslint.config(
       'boundaries/elements': [
         { type: 'app', pattern: 'src/app/**' },
         { type: 'components', pattern: 'src/components/**' },
+        { type: 'features', pattern: 'src/features/**' },
         { type: 'hooks', pattern: 'src/hooks/**' },
         { type: 'lib', pattern: 'src/lib/**' },
-        { type: 'pages', pattern: 'src/pages/**' },
         { type: 'routes', pattern: 'src/routes/**' },
         { type: 'testing', pattern: 'src/testing/**' },
         { type: 'types', pattern: 'src/types/**' },
@@ -81,6 +81,10 @@ export default tseslint.config(
               allow: ['components', 'utils'],
             },
             {
+              from: 'features',
+              allow: ['components', 'features', 'lib', 'hooks', 'testing', 'types'],
+            },
+            {
               from: 'hooks',
               allow: ['hooks', 'lib', 'types'],
             },
@@ -89,12 +93,8 @@ export default tseslint.config(
               allow: ['lib'],
             },
             {
-              from: 'pages',
-              allow: ['components', 'lib', 'pages', 'hooks', 'testing', 'types'],
-            },
-            {
               from: 'routes',
-              allow: ['pages', 'routes'],
+              allow: ['features', 'routes'],
             },
             {
               from: 'testing',
@@ -117,7 +117,7 @@ export default tseslint.config(
           default: 'disallow',
           rules: [
             {
-              target: ['components', 'pages'],
+              target: ['components', 'features'],
               allow: '**/index.{ts,tsx}',
             },
             {
