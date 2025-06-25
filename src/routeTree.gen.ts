@@ -11,7 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthedRouteImport } from './routes/_authed'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthedIndexRouteImport } from './routes/_authed/index'
 import { Route as AuthedUsersRouteImport } from './routes/_authed/users'
 import { Route as AuthedProductsRouteImport } from './routes/_authed/products'
 
@@ -24,10 +24,10 @@ const AuthedRoute = AuthedRouteImport.update({
   id: '/_authed',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const AuthedIndexRoute = AuthedIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthedRoute,
 } as any)
 const AuthedUsersRoute = AuthedUsersRouteImport.update({
   id: '/users',
@@ -41,41 +41,40 @@ const AuthedProductsRoute = AuthedProductsRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/products': typeof AuthedProductsRoute
   '/users': typeof AuthedUsersRoute
+  '/': typeof AuthedIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/products': typeof AuthedProductsRoute
   '/users': typeof AuthedUsersRoute
+  '/': typeof AuthedIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/_authed': typeof AuthedRouteWithChildren
   '/login': typeof LoginRoute
   '/_authed/products': typeof AuthedProductsRoute
   '/_authed/users': typeof AuthedUsersRoute
+  '/_authed/': typeof AuthedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/products' | '/users'
+  fullPaths: '/login' | '/products' | '/users' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/products' | '/users'
+  to: '/login' | '/products' | '/users' | '/'
   id:
     | '__root__'
-    | '/'
     | '/_authed'
     | '/login'
     | '/_authed/products'
     | '/_authed/users'
+    | '/_authed/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   AuthedRoute: typeof AuthedRouteWithChildren
   LoginRoute: typeof LoginRoute
 }
@@ -96,12 +95,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_authed/': {
+      id: '/_authed/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthedIndexRouteImport
+      parentRoute: typeof AuthedRoute
     }
     '/_authed/users': {
       id: '/_authed/users'
@@ -123,18 +122,19 @@ declare module '@tanstack/react-router' {
 interface AuthedRouteChildren {
   AuthedProductsRoute: typeof AuthedProductsRoute
   AuthedUsersRoute: typeof AuthedUsersRoute
+  AuthedIndexRoute: typeof AuthedIndexRoute
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedProductsRoute: AuthedProductsRoute,
   AuthedUsersRoute: AuthedUsersRoute,
+  AuthedIndexRoute: AuthedIndexRoute,
 }
 
 const AuthedRouteWithChildren =
   AuthedRoute._addFileChildren(AuthedRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   AuthedRoute: AuthedRouteWithChildren,
   LoginRoute: LoginRoute,
 }

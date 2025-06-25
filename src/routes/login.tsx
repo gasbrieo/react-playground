@@ -6,10 +6,10 @@ const RouteComponent = () => {
 };
 
 export const Route = createFileRoute("/login")({
-  component: RouteComponent,
   beforeLoad: async ({ context }) => {
     if (context.authState.isAuthenticated) {
       throw redirect({ to: "/" });
     }
   },
+  component: RouteComponent,
 });

@@ -2,27 +2,17 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Product } from "../../types/products";
+import { User } from "../types/users";
 
-interface ProductsTableProps {
-  data: {
-    products: Product[];
-    pagination: {
-      page: number;
-      pageSize: number;
-      totalPages: number;
-    };
-  };
-  onPaginationChange: (page: number, pageSize: number) => void;
+interface UsersTableProps {
+  data: User[];
 }
 
-export const ProductsTable = ({
-  data,
-  onPaginationChange,
-}: ProductsTableProps) => {
-  const columns: ColumnDef<Product>[] = [
+export const UsersTable = ({ data }: UsersTableProps) => {
+  const columns: ColumnDef<User>[] = [
     {
       accessorKey: "id",
       header: "Id",
@@ -34,26 +24,15 @@ export const ProductsTable = ({
   ];
 
   const table = useReactTable({
-    data: data.products,
+    data,
     columns,
-    pageCount: data.pagination.totalPages,
-    manualPagination: true,
-    getCoreRowModel: getCoreRowModel(),
-    onPaginationChange: (updaterOrValue) => {
-      if (onPaginationChange) {
-        const newValue =
-          typeof updaterOrValue === "function"
-            ? updaterOrValue(table.getState().pagination)
-            : updaterOrValue;
-        onPaginationChange(newValue.pageIndex, newValue.pageSize);
-      }
-    },
-    state: {
+    initialState: {
       pagination: {
-        pageIndex: data.pagination.page,
-        pageSize: data.pagination.pageSize,
+        pageSize: 5,
       },
     },
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (

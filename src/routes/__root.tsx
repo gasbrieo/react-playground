@@ -14,58 +14,20 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import appCss from "../styles/app.css?url";
 import { seo } from "~/utils/seo";
-import { authQueries } from "~/features/auth";
+import { getAuthState } from "~/features/auth";
 
 interface RootDocumentProps {
   children: ReactNode;
 }
 
 const RootDocument = ({ children }: RootDocumentProps) => {
-  const { authState } = Route.useRouteContext();
-
   return (
     <html>
       <head>
         <HeadContent />
       </head>
       <body>
-        <header className="p-2 flex gap-2 text-lg">
-          <Link
-            to="/"
-            activeProps={{
-              className: "font-bold",
-            }}
-            activeOptions={{ exact: true }}
-          >
-            Home
-          </Link>
-          <Link
-            to="/users"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Users
-          </Link>
-          <Link
-            to="/products"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Products
-          </Link>
-          <div className="ml-auto">
-            {authState.isAuthenticated ? (
-              <>
-                <span className="mr-2">{authState.user.email}</span>
-              </>
-            ) : (
-              <Link to="/login">Login</Link>
-            )}
-          </div>
-        </header>
-        <main className="flex-1 space-y-4 p-4">{children}</main>
+        {children}
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />
@@ -87,13 +49,6 @@ interface RouteContext {
 }
 
 export const Route = createRootRouteWithContext<RouteContext>()({
-  beforeLoad: async ({ context }) => {
-    const authState = await context.queryClient.ensureQueryData(
-      authQueries.user()
-    );
-
-    return { authState };
-  },
   head: () => ({
     meta: [
       {
@@ -111,6 +66,10 @@ export const Route = createRootRouteWithContext<RouteContext>()({
     ],
     links: [{ rel: "stylesheet", href: appCss }],
   }),
+  beforeLoad: async () => {
+    const authState = await getAuthState();
+    return { authState };
+  },
   errorComponent: (props) => {
     return (
       <RootDocument>

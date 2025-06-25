@@ -11,7 +11,7 @@ export const LoginPage = () => {
     mutationFn: useServerFn(login),
     onSuccess: () => {
       queryClient.resetQueries();
-      navigate({ to: "/" });
+      navigate({ to: "/login" });
     },
   });
 

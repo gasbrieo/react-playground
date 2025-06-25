@@ -1,5 +1,13 @@
-export type AuthState =
-  | { isAuthenticated: false }
-  | { isAuthenticated: true; user: User };
+import { SessionUser } from "./session";
 
-export type User = { email: string };
+export type UnauthenticatedState = {
+  isAuthenticated: false;
+  user?: undefined;
+};
+
+export type AuthenticatedState = {
+  isAuthenticated: true;
+  user: SessionUser;
+};
+
+export type AuthState = UnauthenticatedState | AuthenticatedState;

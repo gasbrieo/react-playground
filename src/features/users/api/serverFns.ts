@@ -8,9 +8,3 @@ export const getUsers = createServerFn({ method: "GET" }).handler(async () => {
     .get<User[]>("https://jsonplaceholder.typicode.com/users")
     .then((r) => r.data.slice(0, 10));
 });
-
-export const usersQueryOptions = () =>
-  queryOptions({
-    queryKey: ["users"],
-    queryFn: () => getUsers(),
-  });

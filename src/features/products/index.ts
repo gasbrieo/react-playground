@@ -1,3 +1,5 @@
+export { getProducts } from "./api/serverFns";
+export { productsQueries } from "./api/queries";
+export { ProductsTable } from "./components/ProductsTable";
 export { ProductsPage } from "./pages/ProductsPage";
-export { productsQueryOptions } from "./api/getProducts";
-export type { ProductsFilters } from "./types/products";
+export type { Product } from "./types/products";

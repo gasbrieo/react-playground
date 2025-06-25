@@ -1,6 +1,6 @@
 import { redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-import { useAppSession } from "~/utils/session";
+import { useAppSession } from "~/features/auth/utils/session";
 import { LoginSchema } from "../schemas/login";
 import { AuthState } from "../types/auth";
 
@@ -22,9 +22,9 @@ export const logout = createServerFn().handler(async () => {
   session.clear();
 });
 
-export const getUser = createServerFn({
+export const getAuthState = createServerFn({
   method: "GET",
-}).handler<AuthState>(async () => {
+}).handler(async () => {
   const session = await useAppSession();
 
   if (!session.data.email) {
@@ -33,8 +33,6 @@ export const getUser = createServerFn({
 
   return {
     isAuthenticated: true,
-    user: {
-      email: session.data.email,
-    },
+    user: session.data,
   };
 });
