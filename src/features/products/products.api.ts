@@ -1,4 +1,8 @@
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  queryOptions,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/react-start";
 import axios from "redaxios";
 import { Product, ProductsFilters } from "./products.types";
@@ -53,8 +57,8 @@ export const productsQueryOptions = (filters: ProductsFilters = {}) =>
     queryFn: () =>
       fetchProducts({
         data: {
-          page: filters.page ?? 0,
-          pageSize: filters.pageSize ?? 10,
+          page: filters.page,
+          pageSize: filters.pageSize,
           sortBy: filters.sortBy,
           sortOrder: filters.sortOrder,
           filters: {

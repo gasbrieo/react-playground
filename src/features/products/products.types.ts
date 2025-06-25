@@ -12,13 +12,3 @@ export type ProductsFilters = {
   category?: string;
   status?: string;
 };
-
-export interface ProductsResponse {
-  products: Product[];
-  pagination: {
-    page: number;
-    pageSize: number;
-    totalCount: number;
-    totalPages: number;
-  };
-}
