@@ -5,22 +5,20 @@ import { routeTree } from "./routeTree.gen";
 import { DefaultCatchBoundary } from "./components/errors/DefaultCatchBoundary/DefaultCatchBoundary";
 import { NotFound } from "./components/errors/NotFound/NotFound";
 
-export function createRouter() {
+export const createRouter = () => {
   const queryClient = new QueryClient();
 
   return routerWithQueryClient(
     createTanStackRouter({
       routeTree,
-      context: { queryClient },
       defaultPreload: "intent",
-      defaultPreloadStaleTime: 0,
-      scrollRestoration: true,
       defaultErrorComponent: DefaultCatchBoundary,
       defaultNotFoundComponent: () => <NotFound />,
+      context: { queryClient },
     }),
     queryClient
   );
-}
+};
 
 declare module "@tanstack/react-router" {
   interface Register {

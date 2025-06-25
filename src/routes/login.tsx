@@ -1,12 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
-import z from "zod";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { LoginPage } from "~/features/auth";
 
-const loginSearchSchema = z.object({
-  redirect: z.string().optional(),
-});
+const RouteComponent = () => {
+  return <LoginPage />;
+};
 
 export const Route = createFileRoute("/login")({
-  component: LoginPage,
-  validateSearch: (search) => loginSearchSchema.parse(search),
+  component: RouteComponent,
+  beforeLoad: async ({ context }) => {
+    if (context.authState.isAuthenticated) {
+      throw redirect({ to: "/" });
+    }
+  },
 });

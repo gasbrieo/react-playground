@@ -14,14 +14,14 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import appCss from "../styles/app.css?url";
 import { seo } from "~/utils/seo";
-import { getUserSession } from "~/features/auth";
+import { authQueries } from "~/features/auth";
 
 interface RootDocumentProps {
   children: ReactNode;
 }
 
 const RootDocument = ({ children }: RootDocumentProps) => {
-  const { user } = Route.useRouteContext();
+  const { authState } = Route.useRouteContext();
 
   return (
     <html>
@@ -56,10 +56,9 @@ const RootDocument = ({ children }: RootDocumentProps) => {
             Products
           </Link>
           <div className="ml-auto">
-            {user ? (
+            {authState.isAuthenticated ? (
               <>
-                <span className="mr-2">{user.email}</span>
-                <Link to="/logout">Logout</Link>
+                <span className="mr-2">{authState.user.email}</span>
               </>
             ) : (
               <Link to="/login">Login</Link>
@@ -88,12 +87,12 @@ interface RouteContext {
 }
 
 export const Route = createRootRouteWithContext<RouteContext>()({
-  beforeLoad: async () => {
-    const user = await getUserSession();
+  beforeLoad: async ({ context }) => {
+    const authState = await context.queryClient.ensureQueryData(
+      authQueries.user()
+    );
 
-    return {
-      user,
-    };
+    return { authState };
   },
   head: () => ({
     meta: [
