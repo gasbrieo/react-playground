@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { UsersTable } from "./users.table";
-import { usersQueryOptions } from "./users.api";
+import { usersQueryOptions } from "../../api/getUsers";
+import { UsersTable } from "../../components/UsersTable";
 
 export const UsersPage = () => {
   const { data } = useSuspenseQuery(usersQueryOptions());

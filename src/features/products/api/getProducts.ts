@@ -1,18 +1,14 @@
-import {
-  keepPreviousData,
-  queryOptions,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
+import { queryOptions } from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/react-start";
 import axios from "redaxios";
-import { Product, ProductsFilters } from "./products.types";
 import z from "zod";
+import { Product, ProductsFilters } from "../types/products";
 
-export const fetchProducts = createServerFn({ method: "GET" })
+export const getProducts = createServerFn({ method: "GET" })
   .validator(
     z.object({
       page: z.number().default(0),
-      pageSize: z.number().default(10),
+      pageSize: z.number().default(5),
       sortBy: z.string().optional(),
       sortOrder: z.enum(["asc", "desc"]).optional(),
       filters: z
@@ -25,12 +21,10 @@ export const fetchProducts = createServerFn({ method: "GET" })
     })
   )
   .handler(async ({ data }) => {
-    console.info(`Fetching products with filters ${data}...`);
-
     const { page, pageSize } = data;
 
     return axios
-      .get<Array<Product>>("https://jsonplaceholder.typicode.com/users")
+      .get<Product[]>("https://jsonplaceholder.typicode.com/users")
       .then((r) => {
         const totalCount = r.data.length;
         const totalPages = Math.ceil(totalCount / pageSize);
@@ -55,7 +49,7 @@ export const productsQueryOptions = (filters: ProductsFilters = {}) =>
   queryOptions({
     queryKey: ["products", filters],
     queryFn: () =>
-      fetchProducts({
+      getProducts({
         data: {
           page: filters.page,
           pageSize: filters.pageSize,

@@ -1,8 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import z from "zod";
-import { productsQueryOptions } from "~/features/products/products.api";
-import { ProductPage } from "~/features/products/products.page";
-import { ProductsFilters } from "~/features/products/products.types";
+import {
+  ProductsFilters,
+  ProductsPage,
+  productsQueryOptions,
+} from "~/features/products";
+import { seo } from "~/utils/seo";
 
 const productsSearchSchema = z.object({
   page: z.number().optional(),
@@ -14,8 +17,8 @@ const productsSearchSchema = z.object({
   status: z.string().optional(),
 });
 
-export const Route = createFileRoute("/products")({
-  component: ProductPage,
+export const Route = createFileRoute("/_private/products")({
+  component: ProductsPage,
   validateSearch: (search) => productsSearchSchema.parse(search),
   loaderDeps: ({ search }) => ({
     page: search.page,
@@ -39,4 +42,14 @@ export const Route = createFileRoute("/products")({
 
     await context.queryClient.ensureQueryData(productsQueryOptions(filters));
   },
+  head: () => ({
+    meta: [
+      ...seo({
+        title: "Products | Server-side Pagination with TanStack Table",
+        description:
+          "Product table with server-side pagination using React Query and TanStack Table. Filtered, paginated, and synced via URL search params.",
+      }),
+      ,
+    ],
+  }),
 });

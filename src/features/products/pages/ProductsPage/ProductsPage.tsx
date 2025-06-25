@@ -1,10 +1,10 @@
-import { Route } from "~/routes/products";
-import { ProductsFilters } from "./products.types";
+import { Route } from "~/routes/_private/products";
+import { ProductsFilters } from "../../types/products";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { productsQueryOptions } from "./products.api";
-import { ProductsTable } from "./products.table";
+import { productsQueryOptions } from "../../api/getProducts";
+import { ProductsTable } from "../../components/ProductsTable";
 
-export const ProductPage = () => {
+export const ProductsPage = () => {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
 

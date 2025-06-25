@@ -9,86 +9,116 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UsersRouteImport } from './routes/users'
-import { Route as ProductsRouteImport } from './routes/products'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as PrivateRouteRouteImport } from './routes/_private/route'
+import { Route as PrivateIndexRouteImport } from './routes/_private/index'
+import { Route as PrivateUsersRouteImport } from './routes/_private/users'
+import { Route as PrivateProductsRouteImport } from './routes/_private/products'
 
-const UsersRoute = UsersRouteImport.update({
-  id: '/users',
-  path: '/users',
+const PrivateRouteRoute = PrivateRouteRouteImport.update({
+  id: '/_private',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProductsRoute = ProductsRouteImport.update({
-  id: '/products',
-  path: '/products',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
+const PrivateIndexRoute = PrivateIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PrivateRouteRoute,
+} as any)
+const PrivateUsersRoute = PrivateUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => PrivateRouteRoute,
+} as any)
+const PrivateProductsRoute = PrivateProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => PrivateRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/products': typeof ProductsRoute
-  '/users': typeof UsersRoute
+  '/products': typeof PrivateProductsRoute
+  '/users': typeof PrivateUsersRoute
+  '/': typeof PrivateIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/products': typeof ProductsRoute
-  '/users': typeof UsersRoute
+  '/products': typeof PrivateProductsRoute
+  '/users': typeof PrivateUsersRoute
+  '/': typeof PrivateIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/products': typeof ProductsRoute
-  '/users': typeof UsersRoute
+  '/_private': typeof PrivateRouteRouteWithChildren
+  '/_private/products': typeof PrivateProductsRoute
+  '/_private/users': typeof PrivateUsersRoute
+  '/_private/': typeof PrivateIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/products' | '/users'
+  fullPaths: '/products' | '/users' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/products' | '/users'
-  id: '__root__' | '/' | '/products' | '/users'
+  to: '/products' | '/users' | '/'
+  id:
+    | '__root__'
+    | '/_private'
+    | '/_private/products'
+    | '/_private/users'
+    | '/_private/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  ProductsRoute: typeof ProductsRoute
-  UsersRoute: typeof UsersRoute
+  PrivateRouteRoute: typeof PrivateRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/users': {
-      id: '/users'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof UsersRouteImport
+    '/_private': {
+      id: '/_private'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PrivateRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/products': {
-      id: '/products'
-      path: '/products'
-      fullPath: '/products'
-      preLoaderRoute: typeof ProductsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
+    '/_private/': {
+      id: '/_private/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof PrivateIndexRouteImport
+      parentRoute: typeof PrivateRouteRoute
+    }
+    '/_private/users': {
+      id: '/_private/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof PrivateUsersRouteImport
+      parentRoute: typeof PrivateRouteRoute
+    }
+    '/_private/products': {
+      id: '/_private/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof PrivateProductsRouteImport
+      parentRoute: typeof PrivateRouteRoute
     }
   }
 }
 
+interface PrivateRouteRouteChildren {
+  PrivateProductsRoute: typeof PrivateProductsRoute
+  PrivateUsersRoute: typeof PrivateUsersRoute
+  PrivateIndexRoute: typeof PrivateIndexRoute
+}
+
+const PrivateRouteRouteChildren: PrivateRouteRouteChildren = {
+  PrivateProductsRoute: PrivateProductsRoute,
+  PrivateUsersRoute: PrivateUsersRoute,
+  PrivateIndexRoute: PrivateIndexRoute,
+}
+
+const PrivateRouteRouteWithChildren = PrivateRouteRoute._addFileChildren(
+  PrivateRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  ProductsRoute: ProductsRoute,
-  UsersRoute: UsersRoute,
+  PrivateRouteRoute: PrivateRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
