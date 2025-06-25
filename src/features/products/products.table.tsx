@@ -3,15 +3,25 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
 interface ProductsTableProps {
-  data: Product[];
+  data: {
+    products: Product[];
+    pagination: {
+      page: number;
+      pageSize: number;
+      totalPages: number;
+    };
+  };
+  onPaginationChange: (page: number, pageSize: number) => void;
 }
 
-export const ProductsTable = ({ data }: ProductsTableProps) => {
+export const ProductsTable = ({
+  data,
+  onPaginationChange,
+}: ProductsTableProps) => {
   const columns: ColumnDef<Product>[] = [
     {
       accessorKey: "id",
@@ -24,13 +34,24 @@ export const ProductsTable = ({ data }: ProductsTableProps) => {
   ];
 
   const table = useReactTable({
-    data,
+    data: data.products,
     columns,
+    pageCount: data.pagination.totalPages,
+    manualPagination: true,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    initialState: {
+    onPaginationChange: (updaterOrValue) => {
+      if (onPaginationChange) {
+        const newValue =
+          typeof updaterOrValue === "function"
+            ? updaterOrValue(table.getState().pagination)
+            : updaterOrValue;
+        onPaginationChange(newValue.pageIndex, newValue.pageSize);
+      }
+    },
+    state: {
       pagination: {
-        pageSize: 2,
+        pageIndex: data.pagination.page,
+        pageSize: data.pagination.pageSize,
       },
     },
   });
@@ -72,7 +93,7 @@ export const ProductsTable = ({ data }: ProductsTableProps) => {
           Previous
         </button>
         <span>
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
+          Page {table.getState().pagination.pageIndex + 1} of
           {table.getPageCount()}
         </span>
         <button

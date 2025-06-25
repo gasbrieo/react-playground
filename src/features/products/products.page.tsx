@@ -6,6 +6,7 @@ import { ProductsTable } from "./products.table";
 
 export const ProductPage = () => {
   const search = Route.useSearch();
+  const navigate = Route.useNavigate();
 
   const filters: ProductsFilters = {
     page: search.page,
@@ -19,9 +20,20 @@ export const ProductPage = () => {
 
   const { data } = useSuspenseQuery(productsQueryOptions(filters));
 
+  const handlePaginationChange = (page: number, pageSize: number) => {
+    navigate({
+      search: {
+        ...search,
+        page: page,
+        pageSize: pageSize,
+      },
+      replace: true,
+    });
+  };
+
   return (
     <div>
-      <ProductsTable data={data.products} />
+      <ProductsTable data={data} onPaginationChange={handlePaginationChange} />
     </div>
   );
 };

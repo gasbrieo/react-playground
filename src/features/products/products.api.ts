@@ -2,21 +2,37 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/react-start";
 import axios from "redaxios";
 import { Product, ProductsFilters } from "./products.types";
+import z from "zod";
 
 export const fetchProducts = createServerFn({ method: "GET" })
-  .validator((d: ProductsFilters) => d)
+  .validator(
+    z.object({
+      page: z.number().default(0),
+      pageSize: z.number().default(10),
+      sortBy: z.string().optional(),
+      sortOrder: z.enum(["asc", "desc"]).optional(),
+      filters: z
+        .object({
+          name: z.string().optional(),
+          category: z.string().optional(),
+          status: z.string().optional(),
+        })
+        .optional(),
+    })
+  )
   .handler(async ({ data }) => {
     console.info(`Fetching products with filters ${data}...`);
+
+    const { page, pageSize } = data;
+
     return axios
       .get<Array<Product>>("https://jsonplaceholder.typicode.com/users")
       .then((r) => {
-        const { page = 1, pageSize = 10 } = data;
-
         const totalCount = r.data.length;
         const totalPages = Math.ceil(totalCount / pageSize);
         const paginatedProducts = r.data.slice(
-          (page - 1) * pageSize,
-          page * pageSize
+          page * pageSize,
+          (page + 1) * pageSize
         );
 
         return {
@@ -33,6 +49,19 @@ export const fetchProducts = createServerFn({ method: "GET" })
 
 export const productsQueryOptions = (filters: ProductsFilters = {}) =>
   queryOptions({
-    queryKey: ["products"],
-    queryFn: () => fetchProducts({ data: filters }),
+    queryKey: ["products", filters],
+    queryFn: () =>
+      fetchProducts({
+        data: {
+          page: filters.page ?? 0,
+          pageSize: filters.pageSize ?? 10,
+          sortBy: filters.sortBy,
+          sortOrder: filters.sortOrder,
+          filters: {
+            name: filters.name,
+            category: filters.category,
+            status: filters.status,
+          },
+        },
+      }),
   });
