@@ -18,6 +18,7 @@ export const UsersPage = () => {
 
   return (
     <div>
+      <h1>UsersPage</h1>
       <UsersTable data={data} />
       <button onClick={handleLogout}>Logout</button>
     </div>

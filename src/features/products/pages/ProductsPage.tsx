@@ -22,6 +22,7 @@ export const ProductsPage = () => {
 
   return (
     <div>
+      <h1>ProductsPage</h1>
       <ProductsTable data={data} onPaginationChange={handlePaginationChange} />
     </div>
   );

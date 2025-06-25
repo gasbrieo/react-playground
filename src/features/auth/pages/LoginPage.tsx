@@ -11,13 +11,15 @@ export const LoginPage = () => {
     mutationFn: useServerFn(login),
     onSuccess: () => {
       queryClient.resetQueries();
-      navigate({ to: "/login" });
+      navigate({ to: "/auth/login" });
     },
   });
 
   return (
     <div>
       <button
+        type="button"
+        style={{ cursor: "pointer" }}
         onClick={() =>
           loginMutation.mutateAsync({
             data: {

@@ -10,10 +10,7 @@ export const Route = createFileRoute("/_authed")({
   beforeLoad: ({ context, location }) => {
     if (!context.authState.isAuthenticated) {
       throw redirect({
-        to: "/login",
-        search: {
-          redirect: location.href,
-        },
+        to: "/auth/login",
       });
     }
 
