@@ -2,7 +2,7 @@ import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import { UsersPage, usersQueryOptions } from "~/features/users";
 import { seo } from "~/utils/seo";
 
-export const Route = createFileRoute("/_private/users")({
+export const Route = createFileRoute("/_authed/users")({
   component: UsersPage,
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(usersQueryOptions());

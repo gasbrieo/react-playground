@@ -9,116 +9,153 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as PrivateRouteRouteImport } from './routes/_private/route'
-import { Route as PrivateIndexRouteImport } from './routes/_private/index'
-import { Route as PrivateUsersRouteImport } from './routes/_private/users'
-import { Route as PrivateProductsRouteImport } from './routes/_private/products'
+import { Route as LogoutRouteImport } from './routes/logout'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthedRouteImport } from './routes/_authed'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthedUsersRouteImport } from './routes/_authed/users'
+import { Route as AuthedProductsRouteImport } from './routes/_authed/products'
 
-const PrivateRouteRoute = PrivateRouteRouteImport.update({
-  id: '/_private',
+const LogoutRoute = LogoutRouteImport.update({
+  id: '/logout',
+  path: '/logout',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivateIndexRoute = PrivateIndexRouteImport.update({
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthedRoute = AuthedRouteImport.update({
+  id: '/_authed',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => PrivateRouteRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const PrivateUsersRoute = PrivateUsersRouteImport.update({
+const AuthedUsersRoute = AuthedUsersRouteImport.update({
   id: '/users',
   path: '/users',
-  getParentRoute: () => PrivateRouteRoute,
+  getParentRoute: () => AuthedRoute,
 } as any)
-const PrivateProductsRoute = PrivateProductsRouteImport.update({
+const AuthedProductsRoute = AuthedProductsRouteImport.update({
   id: '/products',
   path: '/products',
-  getParentRoute: () => PrivateRouteRoute,
+  getParentRoute: () => AuthedRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/products': typeof PrivateProductsRoute
-  '/users': typeof PrivateUsersRoute
-  '/': typeof PrivateIndexRoute
+  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/logout': typeof LogoutRoute
+  '/products': typeof AuthedProductsRoute
+  '/users': typeof AuthedUsersRoute
 }
 export interface FileRoutesByTo {
-  '/products': typeof PrivateProductsRoute
-  '/users': typeof PrivateUsersRoute
-  '/': typeof PrivateIndexRoute
+  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/logout': typeof LogoutRoute
+  '/products': typeof AuthedProductsRoute
+  '/users': typeof AuthedUsersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_private': typeof PrivateRouteRouteWithChildren
-  '/_private/products': typeof PrivateProductsRoute
-  '/_private/users': typeof PrivateUsersRoute
-  '/_private/': typeof PrivateIndexRoute
+  '/': typeof IndexRoute
+  '/_authed': typeof AuthedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/logout': typeof LogoutRoute
+  '/_authed/products': typeof AuthedProductsRoute
+  '/_authed/users': typeof AuthedUsersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/products' | '/users' | '/'
+  fullPaths: '/' | '/login' | '/logout' | '/products' | '/users'
   fileRoutesByTo: FileRoutesByTo
-  to: '/products' | '/users' | '/'
+  to: '/' | '/login' | '/logout' | '/products' | '/users'
   id:
     | '__root__'
-    | '/_private'
-    | '/_private/products'
-    | '/_private/users'
-    | '/_private/'
+    | '/'
+    | '/_authed'
+    | '/login'
+    | '/logout'
+    | '/_authed/products'
+    | '/_authed/users'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  PrivateRouteRoute: typeof PrivateRouteRouteWithChildren
+  IndexRoute: typeof IndexRoute
+  AuthedRoute: typeof AuthedRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  LogoutRoute: typeof LogoutRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_private': {
-      id: '/_private'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof PrivateRouteRouteImport
+    '/logout': {
+      id: '/logout'
+      path: '/logout'
+      fullPath: '/logout'
+      preLoaderRoute: typeof LogoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_private/': {
-      id: '/_private/'
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authed': {
+      id: '/_authed'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof PrivateIndexRouteImport
-      parentRoute: typeof PrivateRouteRoute
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_private/users': {
-      id: '/_private/users'
+    '/_authed/users': {
+      id: '/_authed/users'
       path: '/users'
       fullPath: '/users'
-      preLoaderRoute: typeof PrivateUsersRouteImport
-      parentRoute: typeof PrivateRouteRoute
+      preLoaderRoute: typeof AuthedUsersRouteImport
+      parentRoute: typeof AuthedRoute
     }
-    '/_private/products': {
-      id: '/_private/products'
+    '/_authed/products': {
+      id: '/_authed/products'
       path: '/products'
       fullPath: '/products'
-      preLoaderRoute: typeof PrivateProductsRouteImport
-      parentRoute: typeof PrivateRouteRoute
+      preLoaderRoute: typeof AuthedProductsRouteImport
+      parentRoute: typeof AuthedRoute
     }
   }
 }
 
-interface PrivateRouteRouteChildren {
-  PrivateProductsRoute: typeof PrivateProductsRoute
-  PrivateUsersRoute: typeof PrivateUsersRoute
-  PrivateIndexRoute: typeof PrivateIndexRoute
+interface AuthedRouteChildren {
+  AuthedProductsRoute: typeof AuthedProductsRoute
+  AuthedUsersRoute: typeof AuthedUsersRoute
 }
 
-const PrivateRouteRouteChildren: PrivateRouteRouteChildren = {
-  PrivateProductsRoute: PrivateProductsRoute,
-  PrivateUsersRoute: PrivateUsersRoute,
-  PrivateIndexRoute: PrivateIndexRoute,
+const AuthedRouteChildren: AuthedRouteChildren = {
+  AuthedProductsRoute: AuthedProductsRoute,
+  AuthedUsersRoute: AuthedUsersRoute,
 }
 
-const PrivateRouteRouteWithChildren = PrivateRouteRoute._addFileChildren(
-  PrivateRouteRouteChildren,
-)
+const AuthedRouteWithChildren =
+  AuthedRoute._addFileChildren(AuthedRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  PrivateRouteRoute: PrivateRouteRouteWithChildren,
+  IndexRoute: IndexRoute,
+  AuthedRoute: AuthedRouteWithChildren,
+  LoginRoute: LoginRoute,
+  LogoutRoute: LogoutRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

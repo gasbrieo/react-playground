@@ -1,2 +1,2 @@
-export { UsersPage } from "./pages/UsersPage";
 export { usersQueryOptions } from "./api/getUsers";
+export { UsersPage } from "./pages/UsersPage";

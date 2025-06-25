@@ -17,7 +17,7 @@ const productsSearchSchema = z.object({
   status: z.string().optional(),
 });
 
-export const Route = createFileRoute("/_private/products")({
+export const Route = createFileRoute("/_authed/products")({
   component: ProductsPage,
   validateSearch: (search) => productsSearchSchema.parse(search),
   loaderDeps: ({ search }) => ({

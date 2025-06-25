@@ -1,4 +1,4 @@
-import { Route } from "~/routes/_private/products";
+import { Route } from "~/routes/_authed/products";
 import { ProductsFilters } from "../../types/products";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { productsQueryOptions } from "../../api/getProducts";
