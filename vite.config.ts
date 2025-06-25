@@ -14,4 +14,13 @@ export default defineConfig({
     tanstackStart(),
     tailwindcss(),
   ],
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./src/testing/setupTests.ts",
+    coverage: {
+      reporter: ["lcov", "html"],
+      include: ["src"],
+    },
+  },
 });
