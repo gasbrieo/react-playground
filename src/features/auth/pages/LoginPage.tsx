@@ -25,7 +25,7 @@ export const LoginPage = () => {
           loginMutation.mutateAsync({
             data: {
               email: "gaberabreu@gmail.com",
-              password: "1231",
+              password: "",
             },
           })
         }

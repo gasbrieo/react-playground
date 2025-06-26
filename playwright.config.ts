@@ -12,10 +12,10 @@ export default defineConfig({
     trace: "on-first-retry",
   },
   projects: [
-    { name: "setup", testMatch: /.*\.setup\.ts/ },
+    { name: "setup", testMatch: /\/[^/]+\.setup\.ts$/ },
     {
       name: "chromium",
-      testMatch: /.*\.spec\.ts/,
+      testMatch: /\/[^/]+\.spec\.ts$/,
       use: {
         ...devices["Desktop Chrome"],
         storageState: "e2e/.auth/user.json",

@@ -1,0 +1,17 @@
+# dependencies
+/node_modules
+
+# testing
+/coverage
+/test-results/
+/playwright-report/
+/e2e/.auth/
+
+# production
+/dist
+.output
+.nitro
+
+# tanstack
+.tanstack
+routeTree.gen.ts

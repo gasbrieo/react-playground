@@ -1,9 +1,12 @@
+import { fileURLToPath } from "node:url";
+
+import { includeIgnoreFile } from "@eslint/compat";
 import js from "@eslint/js";
 import query from "@tanstack/eslint-plugin-query";
 import router from "@tanstack/eslint-plugin-router";
+import importer from "eslint-plugin-import";
 import jestDom from "eslint-plugin-jest-dom";
 import jsxA11y from "eslint-plugin-jsx-a11y";
-import importer from "eslint-plugin-import";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
@@ -12,8 +15,10 @@ import testingLibrary from "eslint-plugin-testing-library";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
+const ignorePath = fileURLToPath(new URL(".prettierignore", import.meta.url));
+
 export default tseslint.config(
-  { ignores: [] },
+  includeIgnoreFile(ignorePath, "Imported .prettierignore patterns"),
   {
     extends: [
       js.configs.recommended,
@@ -30,7 +35,7 @@ export default tseslint.config(
       importer.flatConfigs.recommended,
       sonarjs.configs.recommended,
     ],
-    files: ["**/*.{ts,tsx}"],
+    files: ["**/*.{ts,tsx,js,jsx}"],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
