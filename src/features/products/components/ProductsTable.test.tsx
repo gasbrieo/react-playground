@@ -1,4 +1,5 @@
 import { render, screen } from "~/testing/testUtils";
+
 import { ProductsTable } from "./ProductsTable";
 
 describe("ProductsTable", () => {
@@ -13,9 +14,7 @@ describe("ProductsTable", () => {
     };
     const handlePaginationChange = vi.fn();
 
-    render(
-      <ProductsTable data={data} onPaginationChange={handlePaginationChange} />
-    );
+    render(<ProductsTable data={data} onPaginationChange={handlePaginationChange} />);
 
     expect(screen.getByText("Name")).toBeInTheDocument();
     expect(screen.getByText("Id")).toBeInTheDocument();

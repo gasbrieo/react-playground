@@ -1,8 +1,8 @@
-import { redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
+
 import { useAppSession } from "~/features/auth/utils/session";
+
 import { LoginSchema } from "../schemas/login";
-import { AuthState } from "../types/auth";
 
 export const login = createServerFn({
   method: "POST",

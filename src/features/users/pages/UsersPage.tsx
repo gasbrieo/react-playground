@@ -1,6 +1,8 @@
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
+
 import { logout } from "~/features/auth";
+
 import { usersQueries } from "../api/queries";
 import { UsersTable } from "../components/UsersTable";
 

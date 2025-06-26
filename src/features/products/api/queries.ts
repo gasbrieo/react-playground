@@ -1,6 +1,8 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getProducts } from "./serverFns";
+
 import { ProductsFilterSchema } from "../schemas/productsFilter";
+
+import { getProducts } from "./serverFns";
 
 export const productsQueries = {
   all: ["products"],

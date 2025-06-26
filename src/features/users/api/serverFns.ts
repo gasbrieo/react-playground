@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+
 import { User } from "../types/users";
 
 export const users: User[] = [
@@ -68,6 +69,6 @@ export const users: User[] = [
 ];
 
 export const getUsers = createServerFn({ method: "GET" }).handler(async () => {
-  let filteredUsers = [...users];
+  const filteredUsers = [...users];
   return filteredUsers;
 });

@@ -1,9 +1,5 @@
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+
 import { Product } from "../types/products";
 
 interface ProductsTableProps {
@@ -18,10 +14,7 @@ interface ProductsTableProps {
   onPaginationChange: (page: number, pageSize: number) => void;
 }
 
-export const ProductsTable = ({
-  data,
-  onPaginationChange,
-}: ProductsTableProps) => {
+export const ProductsTable = ({ data, onPaginationChange }: ProductsTableProps) => {
   const columns: ColumnDef<Product>[] = [
     {
       accessorKey: "id",
@@ -42,9 +35,7 @@ export const ProductsTable = ({
     onPaginationChange: (updaterOrValue) => {
       if (onPaginationChange) {
         const newValue =
-          typeof updaterOrValue === "function"
-            ? updaterOrValue(table.getState().pagination)
-            : updaterOrValue;
+          typeof updaterOrValue === "function" ? updaterOrValue(table.getState().pagination) : updaterOrValue;
         onPaginationChange(newValue.pageIndex, newValue.pageSize);
       }
     },
@@ -63,12 +54,7 @@ export const ProductsTable = ({
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                </th>
+                <th key={header.id}>{flexRender(header.column.columnDef.header, header.getContext())}</th>
               ))}
             </tr>
           ))}
@@ -77,29 +63,21 @@ export const ProductsTable = ({
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
+                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
       <div style={{ marginTop: "1rem" }}>
-        <button
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
+        <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
           Previous
         </button>
         <span>
           Page {table.getState().pagination.pageIndex + 1} of
           {table.getPageCount()}
         </span>
-        <button
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
+        <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
           Next
         </button>
       </div>

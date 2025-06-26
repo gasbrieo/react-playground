@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
-import { Product } from "../types/products";
+
 import { ProductsFilterSchema } from "../schemas/productsFilter";
+import { Product } from "../types/products";
 
 export const products: Product[] = [
   {
@@ -118,14 +119,11 @@ export const getProducts = createServerFn({ method: "GET" })
   .handler(async ({ data }) => {
     const { page, pageSize } = data;
 
-    let filteredProducts = [...products];
+    const filteredProducts = [...products];
 
     const totalCount = filteredProducts.length;
     const totalPages = Math.ceil(totalCount / pageSize);
-    const paginatedProducts = filteredProducts.slice(
-      page * pageSize,
-      (page + 1) * pageSize
-    );
+    const paginatedProducts = filteredProducts.slice(page * pageSize, (page + 1) * pageSize);
 
     return {
       products: paginatedProducts,

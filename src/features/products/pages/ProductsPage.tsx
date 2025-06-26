@@ -1,7 +1,9 @@
-import { Route } from "~/routes/_authed/products";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ProductsTable } from "../components/ProductsTable";
+
+import { Route } from "~/routes/_authed/products";
+
 import { productsQueries } from "../api/queries";
+import { ProductsTable } from "../components/ProductsTable";
 
 export const ProductsPage = () => {
   const filters = Route.useSearch();

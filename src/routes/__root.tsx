@@ -1,20 +1,15 @@
-import type { ReactNode } from "react";
-import {
-  Outlet,
-  createRootRouteWithContext,
-  HeadContent,
-  Scripts,
-  Link,
-} from "@tanstack/react-router";
 import { QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Outlet, createRootRouteWithContext, HeadContent, Scripts } from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import type { ReactNode } from "react";
+
 import { DefaultCatchBoundary } from "~/components/errors/DefaultCatchBoundary";
 import { NotFound } from "~/components/errors/NotFound";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { getAuthState } from "~/features/auth";
+import { seo } from "~/utils/seo";
 
 import appCss from "../styles/app.css?url";
-import { seo } from "~/utils/seo";
-import { getAuthState } from "~/features/auth";
 
 interface RootDocumentProps {
   children: ReactNode;
@@ -22,7 +17,7 @@ interface RootDocumentProps {
 
 const RootDocument = ({ children }: RootDocumentProps) => {
   return (
-    <html>
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
@@ -49,6 +44,10 @@ interface RouteContext {
 }
 
 export const Route = createRootRouteWithContext<RouteContext>()({
+  beforeLoad: async () => {
+    const authState = await getAuthState();
+    return { authState };
+  },
   head: () => ({
     meta: [
       {
@@ -66,10 +65,6 @@ export const Route = createRootRouteWithContext<RouteContext>()({
     ],
     links: [{ rel: "stylesheet", href: appCss }],
   }),
-  beforeLoad: async () => {
-    const authState = await getAuthState();
-    return { authState };
-  },
   errorComponent: (props) => {
     return (
       <RootDocument>

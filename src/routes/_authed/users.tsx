@@ -1,8 +1,12 @@
-import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+
 import { UsersPage, usersQueries } from "~/features/users";
 import { seo } from "~/utils/seo";
 
 export const Route = createFileRoute("/_authed/users")({
+  loader: async ({ context }) => {
+    await context.queryClient.ensureQueryData(usersQueries.list());
+  },
   head: () => ({
     meta: [
       ...seo({
@@ -10,11 +14,7 @@ export const Route = createFileRoute("/_authed/users")({
         description:
           "User table demonstrating client-side pagination with TanStack Table and React Query. Simple dataset fully controlled on the client.",
       }),
-      ,
     ],
   }),
-  loader: async ({ context }) => {
-    await context.queryClient.ensureQueryData(usersQueries.list());
-  },
   component: UsersPage,
 });
