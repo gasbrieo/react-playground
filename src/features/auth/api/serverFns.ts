@@ -16,7 +16,9 @@ export const login = createServerFn({
     });
   });
 
-export const logout = createServerFn().handler(async () => {
+export const logout = createServerFn({
+  method: "POST",
+}).handler(async () => {
   const session = await useAppSession();
 
   session.clear();
