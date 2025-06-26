@@ -3,6 +3,19 @@ import { createServerFn } from "@tanstack/react-start";
 import { useAppSession } from "~/features/auth/utils/session";
 
 import { LoginSchema } from "../schemas/login";
+import { RegisterSchema } from "../schemas/register";
+
+export const register = createServerFn({
+  method: "POST",
+})
+  .validator(RegisterSchema)
+  .handler(async ({ data }) => {
+    const session = await useAppSession();
+
+    await session.update({
+      email: data.email,
+    });
+  });
 
 export const login = createServerFn({
   method: "POST",
