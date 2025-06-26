@@ -1,37 +1,32 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
+import { UsersIcon } from "lucide-react";
 
-import { login } from "../api/serverFns";
+import { LoginForm } from "../components/LoginForm";
 
 export const LoginPage = () => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
-  const loginMutation = useMutation({
-    mutationFn: useServerFn(login),
-    onSuccess: () => {
-      queryClient.resetQueries();
-      navigate({ to: "/auth/login" });
-    },
-  });
-
   return (
-    <div>
-      <button
-        type="button"
-        style={{ cursor: "pointer" }}
-        onClick={() =>
-          loginMutation.mutateAsync({
-            data: {
-              email: "gaberabreu@gmail.com",
-              password: "",
-            },
-          })
-        }
-      >
-        Login
-      </button>
+    <div className="grid min-h-svh lg:grid-cols-2">
+      <div className="flex flex-col gap-4 p-6 md:p-10">
+        <div className="flex justify-center gap-2 md:justify-start">
+          <div className="flex items-center gap-2 font-medium">
+            <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
+              <UsersIcon className="size-4" />
+            </div>
+            User Management
+          </div>
+        </div>
+        <div className="flex flex-1 items-center justify-center">
+          <div className="w-full max-w-xs">
+            <LoginForm />
+          </div>
+        </div>
+      </div>
+      <div className="bg-muted relative hidden lg:block">
+        <img
+          src="/placeholder.svg"
+          alt="Placeholder"
+          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+        />
+      </div>
     </div>
   );
 };

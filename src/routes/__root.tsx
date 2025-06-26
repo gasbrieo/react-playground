@@ -63,7 +63,10 @@ export const Route = createRootRouteWithContext<RouteContext>()({
           "A technical demo app using React, TanStack Table, and React Query. Real examples of client-side and server-side pagination with TanStack Start.",
       }),
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+    ],
   }),
   errorComponent: (props) => {
     return (
