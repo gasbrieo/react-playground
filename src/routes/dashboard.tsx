@@ -21,5 +21,8 @@ export const Route = createFileRoute("/dashboard")({
 
     return { authState: context.authState as AuthenticatedState };
   },
+  loader: () => ({
+    crumb: "Dashboard",
+  }),
   component: RouteComponent,
 });

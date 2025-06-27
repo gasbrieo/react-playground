@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import { SidebarInset, SidebarProvider } from "~/components/ui/Sidebar";
 import { Route } from "~/routes/dashboard";
 
-import { DashboardHeader } from "./DashboardHeader";
 import { DashboardSidebar } from "./DashboardSidebar";
+import { DashboardTopbar } from "./DashboardTopbar";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -17,7 +17,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     <SidebarProvider>
       <DashboardSidebar user={authState.user} />
       <SidebarInset>
-        <DashboardHeader />
+        <DashboardTopbar />
         <main className="flex flex-1 p-4 md:px-6">{children}</main>
       </SidebarInset>
     </SidebarProvider>

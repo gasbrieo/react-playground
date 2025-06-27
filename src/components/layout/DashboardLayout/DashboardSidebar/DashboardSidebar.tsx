@@ -30,13 +30,7 @@ import {
   SidebarRail,
 } from "~/components/ui/Sidebar";
 
-interface DashboardSidebarProps {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}
+import type { DashboardSidebarProps } from "./DashboardSidebar.types";
 
 export const DashboardSidebar = ({ user }: DashboardSidebarProps) => {
   return (

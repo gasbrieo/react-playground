@@ -6,6 +6,10 @@ import { seo } from "~/utils/seo";
 export const Route = createFileRoute("/dashboard/users")({
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(usersQueries.list());
+
+    return {
+      crumb: "Users",
+    };
   },
   head: () => ({
     meta: [

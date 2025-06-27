@@ -11,6 +11,10 @@ export const Route = createFileRoute("/dashboard/products")({
   }),
   loader: async ({ context, deps }) => {
     await context.queryClient.ensureQueryData(productsQueries.list(deps.filters));
+
+    return {
+      crumb: "Products",
+    };
   },
   head: () => ({
     meta: [
