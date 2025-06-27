@@ -1,6 +1,7 @@
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
+import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
-import { Product } from "../types/products";
+import type { Product } from "../types/products";
 
 interface ProductsTableProps {
   data: {

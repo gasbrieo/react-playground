@@ -1,25 +1,9 @@
-import { createFormHook, createFormHookContexts, useStore } from "@tanstack/react-form";
+import { createFormHookContexts, useStore } from "@tanstack/react-form";
 import { createContext, useContext } from "react";
 
-import { FormControl, FormDescription, FormItem, FormLabel, FormMessage, SubmitButton } from "./Form";
-import { FormItemContextProps } from "./Form.types";
+import type { FormItemContextProps } from "./FormItemContext.types";
 
 const { fieldContext, formContext, useFieldContext: _useFieldContext, useFormContext } = createFormHookContexts();
-
-export const { useAppForm, withForm } = createFormHook({
-  fieldContext,
-  formContext,
-  fieldComponents: {
-    FormLabel,
-    FormControl,
-    FormDescription,
-    FormMessage,
-    FormItem,
-  },
-  formComponents: {
-    SubmitButton,
-  },
-});
 
 export const FormItemContext = createContext<FormItemContextProps>({} as FormItemContextProps);
 
@@ -29,7 +13,7 @@ export const useFieldContext = () => {
   const errors = useStore(store, (state) => state.meta.errors);
 
   if (!fieldContext) {
-    throw new Error("useFieldContext should be used within <FormItem>");
+    throw new Error("useFieldContext must be used within <FormItem>");
   }
 
   return {
@@ -44,4 +28,4 @@ export const useFieldContext = () => {
   };
 };
 
-export { useFormContext };
+export { fieldContext, formContext, useFormContext };

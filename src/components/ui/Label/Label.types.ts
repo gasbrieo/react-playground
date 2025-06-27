@@ -1,4 +1,4 @@
-import type { Root } from "@radix-ui/react-label";
+import type * as LabelPrimitive from "@radix-ui/react-label";
 import type { ComponentProps } from "react";
 
-export interface LabelProps extends ComponentProps<typeof Root> {}
+export interface LabelProps extends ComponentProps<typeof LabelPrimitive.Root> {}

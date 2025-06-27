@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 
 import { ProductsFilterSchema } from "../schemas/productsFilter";
-import { Product } from "../types/products";
+import type { Product } from "../types/products";
 
 export const products: Product[] = [
   {

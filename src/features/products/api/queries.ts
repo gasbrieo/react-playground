@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 
-import { ProductsFilterSchema } from "../schemas/productsFilter";
+import type { ProductsFilterSchema } from "../schemas/productsFilter";
 
 import { getProducts } from "./serverFns";
 

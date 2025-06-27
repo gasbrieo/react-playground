@@ -1,6 +1,7 @@
-import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
+import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
 
-import { User } from "../types/users";
+import type { User } from "../types/users";
 
 interface UsersTableProps {
   data: User[];

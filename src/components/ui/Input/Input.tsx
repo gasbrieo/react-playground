@@ -1,10 +1,8 @@
-import type { FC } from "react";
-
 import { cn } from "~/utils/cn";
 
 import type { InputProps } from "./Input.types";
 
-export const Input: FC<InputProps> = ({ className, type, ...props }) => {
+export const Input = ({ className, type, ...props }: InputProps) => {
   return (
     <input
       type={type}

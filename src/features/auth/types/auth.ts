@@ -1,4 +1,4 @@
-import { SessionUser } from "./session";
+import type { SessionUser } from "./session";
 
 export type UnauthenticatedState = {
   isAuthenticated: false;

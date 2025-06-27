@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-import { User } from "../types/users";
+import type { User } from "../types/users";
 
 export const users: User[] = [
   {
