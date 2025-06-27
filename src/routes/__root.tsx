@@ -24,7 +24,7 @@ const RootDocument = ({ children }: RootDocumentProps) => {
       <body>
         {children}
         <TanStackRouterDevtools position="bottom-right" />
-        <ReactQueryDevtools buttonPosition="bottom-left" />
+        <ReactQueryDevtools buttonPosition="top-right" />
         <Scripts />
       </body>
     </html>

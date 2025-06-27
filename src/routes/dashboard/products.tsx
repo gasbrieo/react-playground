@@ -4,7 +4,7 @@ import { ProductsPage, productsQueries } from "~/features/products";
 import { ProductsFilterSchema } from "~/features/products/schemas/productsFilter";
 import { seo } from "~/utils/seo";
 
-export const Route = createFileRoute("/_authed/products")({
+export const Route = createFileRoute("/dashboard/products")({
   validateSearch: ProductsFilterSchema,
   loaderDeps: ({ search }) => ({
     filters: search,

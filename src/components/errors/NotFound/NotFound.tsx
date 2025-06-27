@@ -14,7 +14,7 @@ export function NotFound({ children }: { children?: ReactNode }) {
         >
           Go back
         </button>
-        <Link to="/" className="bg-cyan-600 text-white px-2 py-1 rounded uppercase font-black text-sm">
+        <Link to="/dashboard" className="bg-cyan-600 text-white px-2 py-1 rounded uppercase font-black text-sm">
           Start Over
         </Link>
       </p>

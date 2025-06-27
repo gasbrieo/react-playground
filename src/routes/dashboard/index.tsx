@@ -8,6 +8,6 @@ const RouteComponent = () => {
   );
 };
 
-export const Route = createFileRoute("/_authed/")({
+export const Route = createFileRoute("/dashboard/")({
   component: RouteComponent,
 });

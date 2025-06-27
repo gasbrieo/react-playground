@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { UsersPage, usersQueries } from "~/features/users";
 import { seo } from "~/utils/seo";
 
-export const Route = createFileRoute("/_authed/users")({
+export const Route = createFileRoute("/dashboard/users")({
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(usersQueries.list());
   },

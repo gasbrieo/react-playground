@@ -1,17 +1,17 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
-import { AuthedLayout } from "~/components/layout/AuthedLayout";
+import { DashboardLayout } from "~/components/layout/DashboardLayout";
 import type { AuthenticatedState } from "~/features/auth/types/auth";
 
 const RouteComponent = () => {
   return (
-    <AuthedLayout>
+    <DashboardLayout>
       <Outlet />
-    </AuthedLayout>
+    </DashboardLayout>
   );
 };
 
-export const Route = createFileRoute("/_authed")({
+export const Route = createFileRoute("/dashboard")({
   beforeLoad: ({ context }) => {
     if (!context.authState.isAuthenticated) {
       throw redirect({

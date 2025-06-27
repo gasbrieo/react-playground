@@ -12,8 +12,12 @@ export const register = createServerFn({
   .handler(async ({ data }) => {
     const session = await useAppSession();
 
+    const name = data.email.split("@")[0];
+
     await session.update({
+      name: name,
       email: data.email,
+      avatar: `https://ui-avatars.com/api/?name=${name}&size=128&background=0D8ABC&color=fff`,
     });
   });
 
@@ -24,8 +28,12 @@ export const login = createServerFn({
   .handler(async ({ data }) => {
     const session = await useAppSession();
 
+    const name = data.email.split("@")[0];
+
     await session.update({
+      name: name,
       email: data.email,
+      avatar: `https://ui-avatars.com/api/?name=${name}&size=128&background=0D8ABC&color=fff`,
     });
   });
 

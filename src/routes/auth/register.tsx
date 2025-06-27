@@ -9,7 +9,7 @@ const RouteComponent = () => {
 export const Route = createFileRoute("/auth/register")({
   beforeLoad: ({ context }) => {
     if (context.authState.isAuthenticated) {
-      throw redirect({ to: "/" });
+      throw redirect({ to: "/dashboard" });
     }
   },
   component: RouteComponent,

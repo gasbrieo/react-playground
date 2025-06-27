@@ -16,7 +16,7 @@ export const LoginForm = () => {
     mutationFn: useServerFn(login),
     onSuccess: () => {
       queryClient.resetQueries();
-      navigate({ to: "/" });
+      navigate({ to: "/dashboard" });
     },
   });
 

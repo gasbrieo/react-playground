@@ -16,7 +16,7 @@ export const RegisterForm = () => {
     mutationFn: useServerFn(register),
     onSuccess: () => {
       queryClient.resetQueries();
-      navigate({ to: "/" });
+      navigate({ to: "/dashboard" });
     },
   });
 

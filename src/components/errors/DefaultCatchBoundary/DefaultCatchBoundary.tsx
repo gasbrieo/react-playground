@@ -23,12 +23,15 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
           Try Again
         </button>
         {isRoot ? (
-          <Link to="/" className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold`}>
+          <Link
+            to="/dashboard"
+            className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold`}
+          >
             Home
           </Link>
         ) : (
           <Link
-            to="/"
+            to="/dashboard"
             className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded text-white uppercase font-extrabold`}
             onClick={(e) => {
               e.preventDefault();
