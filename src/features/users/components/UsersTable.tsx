@@ -1,9 +1,9 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/Table";
+import { Checkbox } from "~/components/ui/Checkbox";
+import { DataTable, DataTableColumnHeader, DataTableRowActions } from "~/components/ui/DataTable";
 
-import type { User } from "../types/users";
+import { UserRole, UserStatus, type User } from "../types/users";
 
 interface UsersTableProps {
   data: User[];
@@ -12,73 +12,79 @@ interface UsersTableProps {
 export const UsersTable = ({ data }: UsersTableProps) => {
   const columns: ColumnDef<User>[] = [
     {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+          className="translate-y-[2px]"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+          className="translate-y-[2px]"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
       accessorKey: "id",
-      header: "Id",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="User" />,
+      cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+      enableSorting: false,
+      enableHiding: false,
     },
     {
       accessorKey: "name",
-      header: "Name",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
+      cell: ({ row }) => <div className="w-[80px]">{row.getValue("name")}</div>,
+    },
+    {
+      accessorKey: "role",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Role" />,
+      cell: ({ row }) => {
+        const role = UserRole.find((role) => role.value === row.getValue("role"));
+
+        if (!role) {
+          return null;
+        }
+
+        return (
+          <div className="flex w-[100px] items-center">
+            {role.icon && <role.icon className="mr-2 h-4 w-4 text-muted-foreground" />}
+            <span>{role.label}</span>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "status",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
+      cell: ({ row }) => {
+        const status = UserStatus.find((status) => status.value === row.getValue("status"));
+
+        if (!status) {
+          return null;
+        }
+
+        return (
+          <div className="flex w-[100px] items-center">
+            {status.icon && <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />}
+            <span>{status.label}</span>
+          </div>
+        );
+      },
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => <DataTableRowActions row={row} />,
     },
   ];
 
-  const table = useReactTable({
-    data,
-    columns,
-    initialState: {
-      pagination: {
-        pageSize: 5,
-      },
-    },
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-  });
-
-  return (
-    <div className="space-y-4">
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      <div style={{ marginTop: "1rem" }}>
-        <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-          Previous
-        </button>
-        <span>
-          Page {table.getState().pagination.pageIndex + 1} of
-          {table.getPageCount()}
-        </span>
-        <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-          Next
-        </button>
-      </div>
-    </div>
-  );
+  return <DataTable columns={columns} data={data} />;
 };
