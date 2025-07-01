@@ -16,14 +16,14 @@ export const UserRole = [
     value: "moderator",
     icon: GavelIcon,
   },
-] as const;
+];
 
 export type UserRole = (typeof UserRole)[number]["value"];
 
 export const UserStatus = [
   { label: "Active", value: "active", icon: CheckCircleIcon },
   { label: "Inactive", value: "inactive", icon: CircleOffIcon },
-] as const;
+];
 
 export type UserStatus = (typeof UserStatus)[number]["value"];
 

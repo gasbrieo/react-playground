@@ -61,6 +61,9 @@ export const UsersTable = ({ data }: UsersTableProps) => {
           </div>
         );
       },
+      filterFn: (row, id, value) => {
+        return value.includes(row.getValue(id));
+      },
     },
     {
       accessorKey: "status",
@@ -78,6 +81,9 @@ export const UsersTable = ({ data }: UsersTableProps) => {
             <span>{status.label}</span>
           </div>
         );
+      },
+      filterFn: (row, id, value) => {
+        return value.includes(row.getValue(id));
       },
     },
     {
