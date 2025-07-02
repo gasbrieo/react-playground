@@ -71,19 +71,20 @@ export const DataTable = <TData, TValue>({
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onPaginationChange: serverSide
-      ? (updaterOrValue) => {
-          if (onPaginationChange) {
-            const newValue =
-              typeof updaterOrValue === "function" ? updaterOrValue(table.getState().pagination) : updaterOrValue;
-            onPaginationChange(newValue.pageIndex, newValue.pageSize);
-          }
-        }
-      : undefined,
     getPaginationRowModel: serverSide ? undefined : getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    ...(serverSide
+      ? {
+          onPaginationChange: (updater) => {
+            if (serverSide && onPaginationChange) {
+              const next = typeof updater === "function" ? updater(table.getState().pagination) : updater;
+              onPaginationChange(next.pageIndex, next.pageSize);
+            }
+          },
+        }
+      : { getPaginationRowModel: getPaginationRowModel() }),
   });
 
   return (
