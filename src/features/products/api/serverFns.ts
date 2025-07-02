@@ -117,9 +117,35 @@ export const products: Product[] = [
 export const getProducts = createServerFn({ method: "GET" })
   .validator(ProductsFilterSchema)
   .handler(async ({ data }) => {
-    const { page, pageSize } = data;
+    const { page, pageSize, sortBy, sortOrder, name, status } = data;
 
-    const filteredProducts = [...products];
+    let filteredProducts = [...products];
+
+    if (name) {
+      filteredProducts = filteredProducts.filter((product) => product.name.toLowerCase().includes(name!.toLowerCase()));
+    }
+
+    if (status) {
+      const statusList = status.split(",");
+      filteredProducts = filteredProducts.filter((product) => statusList.includes(product.status));
+    }
+
+    if (sortBy) {
+      filteredProducts.sort((a, b) => {
+        const aValue = a[sortBy as keyof Product];
+        const bValue = b[sortBy as keyof Product];
+
+        if (typeof aValue === "string" && typeof bValue === "string") {
+          return sortOrder === "desc" ? bValue.localeCompare(aValue) : aValue.localeCompare(bValue);
+        }
+
+        if (typeof aValue === "number" && typeof bValue === "number") {
+          return sortOrder === "desc" ? bValue - aValue : aValue - bValue;
+        }
+
+        return 0;
+      });
+    }
 
     const totalCount = filteredProducts.length;
     const totalPages = Math.ceil(totalCount / pageSize);

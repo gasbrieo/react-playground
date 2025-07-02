@@ -10,14 +10,14 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/DropdownMenu";
 
-import type { User } from "../types/users";
+import type { Product } from "../types/products";
 
-interface UsersTableActionProps {
-  row: Row<User>;
+interface ProductsTableActionProps {
+  row: Row<Product>;
 }
 
-export const UsersTableAction = ({ row }: UsersTableActionProps) => {
-  const user = row.original;
+export const ProductsTableAction = ({ row }: ProductsTableActionProps) => {
+  const product = row.original;
 
   return (
     <DropdownMenu>
@@ -29,7 +29,7 @@ export const UsersTableAction = ({ row }: UsersTableActionProps) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id)}>Copy user ID</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(product.id)}>Copy product ID</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

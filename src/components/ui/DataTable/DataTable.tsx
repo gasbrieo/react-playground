@@ -17,7 +17,15 @@ import type { DataTableProps } from "./DataTable.types";
 import { DataTablePagination } from "./DataTablePagination";
 import { DataTableToolbar } from "./DataTableToolbar";
 
-export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) => {
+export const DataTable = <TData, TValue>({
+  columns,
+  data,
+  serverSide = false,
+  pagination,
+  onPaginationChange,
+  onSortingChange,
+  onFilterChange,
+}: DataTableProps<TData, TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
@@ -31,15 +39,48 @@ export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData
       columnVisibility,
       rowSelection,
       columnFilters,
+      ...(serverSide && pagination
+        ? {
+            pagination: {
+              pageIndex: pagination.pageIndex,
+              pageSize: pagination.pageSize,
+            },
+          }
+        : {}),
     },
+    manualPagination: serverSide,
+    manualSorting: serverSide,
+    manualFiltering: serverSide,
+    pageCount: serverSide && pagination ? pagination.pageCount : undefined,
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    onSortingChange: (updaterOrValue) => {
+      setSorting(updaterOrValue);
+      if (serverSide && onSortingChange) {
+        const newValue = typeof updaterOrValue === "function" ? updaterOrValue(sorting) : updaterOrValue;
+        onSortingChange(newValue);
+      }
+    },
+    onColumnFiltersChange: (updaterOrValue) => {
+      setColumnFilters(updaterOrValue);
+      if (serverSide && onFilterChange) {
+        const newValue = typeof updaterOrValue === "function" ? updaterOrValue(columnFilters) : updaterOrValue;
+        onFilterChange(newValue);
+      }
+    },
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: serverSide
+      ? (updaterOrValue) => {
+          if (onPaginationChange) {
+            const newValue =
+              typeof updaterOrValue === "function" ? updaterOrValue(table.getState().pagination) : updaterOrValue;
+            onPaginationChange(newValue.pageIndex, newValue.pageSize);
+          }
+        }
+      : undefined,
+    getPaginationRowModel: serverSide ? undefined : getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
