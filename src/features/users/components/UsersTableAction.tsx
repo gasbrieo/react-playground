@@ -1,6 +1,7 @@
+import type { Row } from "@tanstack/react-table";
 import { MoreHorizontalIcon } from "lucide-react";
 
-import { Button } from "../../Button";
+import { Button } from "~/components/ui/Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,12 +9,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "../../DropdownMenu";
+} from "~/components/ui/DropdownMenu";
 
-import type { DataTableRowActionsProps } from "./DataTableRowActions.types";
+interface UsersTableActionProps<TData> {
+  row: Row<TData>;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const DataTableRowActions = <TData,>({ row }: DataTableRowActionsProps<TData>) => {
+export const UsersTableAction = <TData,>({ row }: UsersTableActionProps<TData>) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

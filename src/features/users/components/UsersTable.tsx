@@ -1,9 +1,11 @@
 import type { ColumnDef } from "@tanstack/react-table";
 
 import { Checkbox } from "~/components/ui/Checkbox";
-import { DataTable, DataTableColumnHeader, DataTableRowActions } from "~/components/ui/DataTable";
+import { DataTable, DataTableColumnHeader } from "~/components/ui/DataTable";
 
 import { UserRole, UserStatus, type User } from "../types/users";
+
+import { UsersTableAction } from "./UsersTableAction";
 
 interface UsersTableProps {
   data: User[];
@@ -43,6 +45,12 @@ export const UsersTable = ({ data }: UsersTableProps) => {
       accessorKey: "name",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
       cell: ({ row }) => <div className="w-[80px]">{row.getValue("name")}</div>,
+      meta: {
+        filter: {
+          type: "text",
+          title: "Name",
+        },
+      },
     },
     {
       accessorKey: "role",
@@ -63,6 +71,13 @@ export const UsersTable = ({ data }: UsersTableProps) => {
       },
       filterFn: (row, id, value) => {
         return value.includes(row.getValue(id));
+      },
+      meta: {
+        filter: {
+          type: "select",
+          title: "Role",
+          options: UserRole,
+        },
       },
     },
     {
@@ -85,10 +100,17 @@ export const UsersTable = ({ data }: UsersTableProps) => {
       filterFn: (row, id, value) => {
         return value.includes(row.getValue(id));
       },
+      meta: {
+        filter: {
+          type: "select",
+          title: "Status",
+          options: UserStatus,
+        },
+      },
     },
     {
       id: "actions",
-      cell: ({ row }) => <DataTableRowActions row={row} />,
+      cell: ({ row }) => <UsersTableAction row={row} />,
     },
   ];
 

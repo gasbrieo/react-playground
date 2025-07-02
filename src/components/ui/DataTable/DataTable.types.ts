@@ -1,4 +1,5 @@
 import { type ColumnDef } from "@tanstack/react-table";
+import type { ReactNode } from "react";
 
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -10,4 +11,5 @@ export interface DataTableProps<TData, TValue> {
     pageSize: number;
     pageCount: number;
   };
+  toolbar?: ReactNode;
 }
