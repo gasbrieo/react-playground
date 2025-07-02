@@ -1,7 +1,8 @@
 import { Command as CommandPrimitive } from "cmdk";
 
 import { cn } from "~/utils/cn";
-import { CommandProps } from "./Command.types";
+
+import type { CommandProps } from "./Command.types";
 
 export const Command = ({ className, ...props }: CommandProps) => {
   return (
