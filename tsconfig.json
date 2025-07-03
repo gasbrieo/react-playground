@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    /* Base */
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+
+    /* Compatibility */
+    "allowJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+
+    /* Language */
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "target": "ES2022",
+
+    /* Module */
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+
+    /* Linting */
+    "strict": true,
+
+    /* Types */
+    "types": ["vitest/globals"]
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}
